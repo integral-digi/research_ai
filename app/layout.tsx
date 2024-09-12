@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ModalProvider } from "@/context/ModalProvider";
 import { DarkModeProvider } from "@/context/DarkModeContext";
+import { TabProvider } from "@/context/TabContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,15 +28,17 @@ export default function RootLayout({
 }>) {
   return (
     <DarkModeProvider>
-      <ModalProvider>
-        <html lang="en">
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          >
-            {children}
-          </body>
-        </html>
-      </ModalProvider>
+      <TabProvider>
+        <ModalProvider>
+          <html lang="en">
+            <body
+              className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            >
+              {children}
+            </body>
+          </html>
+        </ModalProvider>
+      </TabProvider>
     </DarkModeProvider>
   );
 }

@@ -65,7 +65,7 @@ const InfiniteCanvas = () => {
   };
 
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight}>
+    <Stage width={window.innerWidth} height={window.innerHeight} className='w-full bg-emerald-600'>
       <Layer>
         {shapes.map((shape) => (
           <Rect

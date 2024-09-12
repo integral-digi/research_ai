@@ -19,7 +19,7 @@ const CustomGanttTimeline: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full relative">
-      <div className="relative overflow-x-auto w-full pt-6">
+      <div className="relative overflow-x-auto w-full  pt-6">
         <div className="grid grid-cols-[repeat(14,_minmax(100px,_1fr))] gap-4">
           {/* Date Headers */}
           {Array.from({ length: timelineLength }).map((_, index) => {

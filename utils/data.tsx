@@ -1,3 +1,7 @@
+import CanvasHome from "@/app/canvas/page";
+import ChatHome from "@/app/chat/page";
+import Home from "@/app/page";
+import TimelineHome from "@/app/timeline/page";
 import { CalendarIcon, DocumentTextIcon, PresentationChartLineIcon } from "@heroicons/react/24/solid";
 
 export const data = {
@@ -20,10 +24,10 @@ export const data = {
     { id: '4', label: 'Trash', fileType: 'trash' },
   ],
   features: [
-    { id: 1, title: "Create a New Markdown", href: "/chat", image: <DocumentTextIcon className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> },
-    { id: 2, title: "Create a New Canvas", href: "/canvas", image: <PresentationChartLineIcon className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> },
-    { id: 3, title: "Create a New Timeline", href: "/timeline",image: <CalendarIcon className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> },
-    { id: 4, title: "Chat with Research AI", href: "/chat", image: <img src="/assets/research-logo.svg" alt="logo" className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> }
+    { id: 1, title: "Create a New Markdown", href: <Home />, image: <DocumentTextIcon className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> },
+    { id: 2, title: "Create a New Canvas", href: <CanvasHome />, image: <PresentationChartLineIcon className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> },
+    { id: 3, title: "Create a New Timeline", href: <TimelineHome />,image: <CalendarIcon className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> },
+    { id: 4, title: "Chat with Research AI", href: <ChatHome />, image: <img src="/assets/research-logo.svg" alt="logo" className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> }
   ],
   chatData: {
       id: 1,

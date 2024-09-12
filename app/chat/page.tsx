@@ -5,7 +5,7 @@ import ChatBody from "./components/ChatBody";
 import TitleBar from "../components/TitleBar";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 
-const Home = () => {
+const ChatHome = () => {
   return (
     <main className="w-full bg-white dark:bg-neutral-800">
       {/* MenuBar */}
@@ -39,4 +39,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ChatHome;

@@ -26,7 +26,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
     const [orientation, setOrientation] = useState<"portrait" | "landscape">("portrait");
 
     // Callback to handle document load success
-    const onLoadSuccess = useCallback((pdfDocument: PdfJs.PdfDocument) => {
+    const onLoadSuccess = useCallback((pdfDocument: any) => {
         setTotalPages(pdfDocument.numPages);
     }, []);
 
@@ -57,7 +57,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
     };
 
     return (
-        <div className="w-full max-h-screen overflow-y-scroll relative">
+        <div className="w-full max-h-screen bg-slate-100 dark:bg-neutral-800 overflow-y-scroll relative">
             <div className={`relative ${orientation === "landscape" ? "w-screen h-auto" : "w-auto h-screen"}`}>
                 <div className="flex flex-col h-full">
                     <div className="flex-grow py-12">

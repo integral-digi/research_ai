@@ -21,8 +21,10 @@ const ChatBody = ({ id }: { id: string }) => {
           </div>
         )}
       </div>
-      <div className="w-full sticky bottom-0 bg-white dark:bg-neutral-800">
-        <ChatInput />
+      <div className="w-full fixed bottom-12 bg-white dark:bg-neutral-800">
+        <section className="sticky max-w-[76rem] w-full">
+          <ChatInput />
+        </section>
       </div>
     </div>
   );
