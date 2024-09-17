@@ -1,41 +1,68 @@
 "use client";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels, Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
-import { ArrowLeftIcon, Bars3Icon, ChatBubbleOvalLeftIcon, FolderIcon, HeartIcon, MagnifyingGlassIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useRouter } from 'next/navigation';
-import { Fragment } from 'react';
-import { data } from '@/utils/data';
-import { useTabs } from '@/context/TabContext';  
-import AccDropdown from './AccDropDown';
+import {
+  ArrowLeftIcon,
+  Bars3Icon,
+  ChatBubbleOvalLeftIcon,
+  FolderIcon,
+  HeartIcon,
+  MagnifyingGlassIcon,
+  PlusIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
+import { Fragment, useState } from "react";
+import { useTabs } from "@/context/TabContext";
+import AccDropdown from "./AccDropDown";
+import FeatureCard from "./FeatureBox";
+import { Popover, PopoverButton, PopoverPanel, Transition } from "@headlessui/react";
+import { Tooltip } from "@mui/material";
+import { data } from "@/utils/data";
+import SearchField from "./SearchField";
 
 const MenuBar: React.FC = () => {
-  const { tabs, activeTabIndex, addNewTab, closeTab, setActiveTabIndex } = useTabs();
+  const { tabs, activeTabId, addNewTab, closeTab, setActiveTabId } = useTabs();
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false); 
   const router = useRouter();
+
+  const handleSearchToggle = () => {
+    setShowSearch((prev) => !prev); // Toggle the search field
+  };
 
   // Function to switch to the previous tab
   const switchToPrevTab = () => {
+    const activeTabIndex = tabs.findIndex((tab) => tab.id === activeTabId);
     if (activeTabIndex > 0) {
-      setActiveTabIndex(activeTabIndex - 1);
+      setActiveTabId(tabs[activeTabIndex - 1].id); // Switch to the previous tab using its id
     }
   };
 
   return (
-    <section className="w-full h-24 bg-slate-100 dark:bg-zinc-900 flex items-center justify-between px-8 py-2">
+    <section className="relative w-full h-24 bg-slate-100 dark:bg-zinc-900 flex items-center justify-between px-8 py-2">
       {/* Left Menu Section */}
       <section className="flex space-x-6 items-center text-gray-700 dark:text-white">
-        <img 
-          src="/assets/research-logo.svg" 
-          alt="logo" 
+        <img
+          src="/assets/research-logo.svg"
+          alt="logo"
           className="w-auto h-6 cursor-pointer"
           onClick={() => router.push("/")}
         />
         <section className="flex items-center space-x-4">
-          <MagnifyingGlassIcon className="w-4 h-4 cursor-pointer" />
+          <MagnifyingGlassIcon className="w-4 h-4 cursor-pointer" onClick={handleSearchToggle} />
           <HeartIcon className="w-4 h-4 cursor-pointer" />
           <FolderIcon className="w-4 h-4 cursor-pointer" />
-          <Bars3Icon className="w-4 h-4 cursor-pointer" />
+          <Bars3Icon
+            className="w-4 h-4 cursor-pointer"
+            onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+          />
+          {showSearch && (
+            <div className="h-full min-h-screen absolute top-24 left-0 bg-slate-100 dark:bg-zinc-900 p-4 w-72 z-50">
+              <SearchField />
+            </div>
+          )}
         </section>
         <button
-          className="bg-white dark:bg-neutral-800 h-12 w-12 rounded-full hover:bg-neutral-100 flex items-center justify-center"
+          className="bg-white dark:bg-neutral-800 h-12 w-12 rounded-full hover:bg-white/30 hover:dark:bg-neutral-800/30 flex items-center justify-center"
           onClick={switchToPrevTab}
         >
           <ArrowLeftIcon className="w-5 h-5 text-gray-700 dark:text-white" />
@@ -43,44 +70,51 @@ const MenuBar: React.FC = () => {
       </section>
 
       {/* Tabs Section */}
-      <TabGroup selectedIndex={activeTabIndex} onChange={setActiveTabIndex}>
-        <TabList className="flex items-center overflow-x-auto space-x-4 p-1 w-full max-w-3xl scrollbar-hide">
-          {tabs.map((tab) => (
-            <Tab
-              key={tab.id}
-              className={({ selected }) =>
-                `flex-grow min-w-[100px] px-4 py-2 items-center text-sm leading-5 text-gray-700 dark:text-white  ${
-                  selected ? "bg-white dark:bg-neutral-800 font-bold rounded-t-lg h-20" : "bg-white rounded-full dark:bg-zinc-900 h-12"
-                }`
-              }
-            >
+      <div className="-mb-5 flex items-center overflow-x-auto space-x-4 p-1 w-full max-w-3xl scrollbar-hide">
+        {tabs.map((tab) => (
+          <div
+            key={tab.id}
+            className={`flex flex-grow max-w-[100px] w-fit px-4 py-2 items-center text-sm leading-5 text-gray-700 dark:text-white ${
+              activeTabId === tab.id
+                ? "bg-white dark:bg-neutral-800 font-bold rounded-t-xl h-20"
+                : "bg-white rounded-full dark:bg-neutral-800 h-12"
+            } cursor-pointer`}
+            onClick={() => setActiveTabId(tab.id)}
+          >
+            <Tooltip title={tab.title} className="font-medium" arrow>
               <div className="flex items-center space-x-3">
-                <span className='text-gray-700 dark:text-white font-medium text-sm text-nowrap'>{tab.title}</span>
+                <span className="text-gray-700 dark:text-white font-medium text-sm text-nowrap">
+                  {tab.title.length > 4 ? `${tab.title.slice(0, 4)}...` : tab.title}
+                </span>
                 <button
                   className="w-fit"
                   onClick={(e) => {
-                    e.stopPropagation();
+                    e.stopPropagation(); // Prevent activating the tab on close button click
                     closeTab(tab.id);
                   }}
                 >
                   <XMarkIcon className="w-4 h-4" />
                 </button>
               </div>
-            </Tab>
-          ))}
-        </TabList>
-      </TabGroup>
-        {/* Add New Tab Button */}
-        <button
-          className="bg-white dark:bg-neutral-800 h-12 w-12 rounded-full hover:bg-neutral-100 flex items-center justify-center"
-          onClick={() => addNewTab("New Tab", "Content for the new tab")} // Pass default title and content
-        >
-          <PlusIcon className="w-5 h-5 text-gray-700 dark:text-white" />
-        </button>
+            </Tooltip>
+          </div>
+        ))}
+      </div>
+
+      {/* Add New Tab Button */}
+      <button
+        className="bg-white dark:bg-neutral-800 h-12 w-12 rounded-full hover:bg-white/30 hover:dark:bg-neutral-800/30 flex items-center justify-center"
+        onClick={() => addNewTab(`Tab ${tabs.length + 1}`, <FeatureCard />)}
+      >
+        <PlusIcon className="w-5 h-5 text-gray-700 dark:text-white" />
+      </button>
 
       {/* Right Menu Section */}
       <section className="flex space-x-4">
-        <ChatBubbleOvalLeftIcon className="w-6 h-6 cursor-pointer text-gray-700 dark:text-white" onClick={() => router.push("/chat")} />
+        <ChatBubbleOvalLeftIcon
+          className="w-6 h-6 cursor-pointer text-gray-700 dark:text-white"
+          onClick={() => router.push("/chat")}
+        />
         <Popover className="relative h-fit xl:hidden">
           <PopoverButton className="w-fit">
             <section className="h-6 w-6 rounded-full">

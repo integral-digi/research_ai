@@ -21,7 +21,7 @@
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf-viewer/default-layout": "^3.12.0",
     "@react-pdf-viewer/zoom": "^3.12.0",
-    "@types/pdfjs-dist": "^2.10.377",
+    "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.13",
     "frappe-gantt": "^0.6.1",
@@ -29,6 +29,7 @@
     "konva": "^9.3.14",
     "moment": "^2.30.1",
     "next": "14.2.8",
+    "npm-check": "^3.2.10",
     "pdfjs-dist": "^3.11.174",
     "react": "^18",
     "react-big-calendar": "^1.13.4",
@@ -39,12 +40,14 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18",
     "react-konva": "^18.2.10",
-    "react-pdf": "^9.1.0"
+    "react-pdf": "^9.1.0",
+    "use-image": "^1.1.1"
   },
   "devDependencies": {
     "@types/frappe-gantt": "^0.6.4",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
+    "@types/pdfjs-dist": "^2.10.377",
     "@types/react": "^18",
     "@types/react-big-calendar": "^1.8.10",
     "@types/react-calendar-timeline": "^0.28.6",
@@ -54,6 +57,6 @@
     "postcss": "^8",
     "sass": "^1.78.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "5.6.2"
   }
 }

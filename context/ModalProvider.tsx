@@ -1,22 +1,20 @@
-"use client"
-import { createContext, useContext, useState, ReactNode } from "react";
+"use client";
+import { createContext, useContext, useState, ReactNode, FC } from "react";
 
 interface ModalContextProps {
     isOpen: boolean;
-    openSettingsModal: () => void;
-    closeSettingsModal: () => void;
+    toggleModal: (isOpen: boolean) => void;
 }
 
 const ModalContext = createContext<ModalContextProps | undefined>(undefined);
 
-export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const closeSettingsModal = () => setIsOpen(false);
-    const openSettingsModal = () => setIsOpen(true);
+    const toggleModal = (state: boolean) => setIsOpen(state);
 
     return (
-        <ModalContext.Provider value={{ isOpen, openSettingsModal, closeSettingsModal }}>
+        <ModalContext.Provider value={{ isOpen, toggleModal }}>
             {children}
         </ModalContext.Provider>
     );

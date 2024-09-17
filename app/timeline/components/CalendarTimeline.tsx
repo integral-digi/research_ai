@@ -1,6 +1,10 @@
 "use client";
 import dayjs from 'dayjs';
 import { data } from '@/utils/data';
+import { PlusIcon } from '@heroicons/react/24/solid';
+import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
+import AddEvent from './AddEvent';
+import { Fragment } from 'react';
 
 // Helper function to calculate the difference between dates
 const getDaysDifference = (start: string, end: string) => {
@@ -15,16 +19,30 @@ const CustomGanttTimeline: React.FC = () => {
   const currentDate = dayjs().format('YYYY-MM-DD'); // Get the current date in 'YYYY-MM-DD' format
 
   // Calculate the position of the current date relative to the timeline's start
-  const currentDatePosition = getDaysDifference(timelineStart, currentDate) + 1; // +1 to match array index
+  const currentDatePosition = getDaysDifference(timelineStart, currentDate) + 1; 
 
   return (
-    <div className="flex flex-col w-full relative">
-      <div className="relative overflow-x-auto w-full  pt-6">
-        <div className="grid grid-cols-[repeat(14,_minmax(100px,_1fr))] gap-4">
-          {/* Date Headers */}
+    <div className="flex flex-col w-full min-h-screen relative">
+      <div className="relative overflow-x-auto w-full">
+        {/* Subtle Background Grid */}
+        <div className="w-max absolute inset-0 grid grid-cols-[repeat(14,_minmax(100px,_1fr))] pointer-events-none z-0">
+          {Array.from({ length: timelineLength }).map((_, index) => (
+            <div
+              key={index}
+              className={`h-full ${
+                index % 2 === 0
+                  ? 'bg-slate-50 dark:bg-neutral-900/10' // Light background for even columns
+                  : 'bg-transparent' // No background for odd columns
+              }`}
+            ></div>
+          ))}
+        </div>
+
+        {/* Date Headers */}
+        <div className="relative grid grid-cols-[repeat(14,_minmax(100px,_1fr))] gap-4 w-max border-b border-slate-300 dark:border-gray-700 bg-white dark:bg-neutral-800 py-4 z-10">
           {Array.from({ length: timelineLength }).map((_, index) => {
             const date = dayjs(timelineStart).add(index, 'day').format('ddd D');
-            const isCurrentDate = index === currentDatePosition - 1; // Compare index to currentDatePosition
+            const isCurrentDate = index === currentDatePosition - 1;
 
             return (
               <div
@@ -33,58 +51,57 @@ const CustomGanttTimeline: React.FC = () => {
                   isCurrentDate ? 'text-blue-600' : 'text-gray-700 dark:text-white'
                 }`}
               >
-                {/* Current Date Indicator */}
                 <div
                   className={`relative ${
-                    isCurrentDate ? 'w-8 h-8 bg-blue-600 rounded-full mx-auto flex items-center justify-center' : ''
+                    isCurrentDate
+                      ? 'w-fit h-8 px-1 bg-indigo-500 rounded-full mx-auto flex items-center justify-center'
+                      : ''
                   }`}
                 >
-                  <span className={`${isCurrentDate ? 'text-white' : ''}`}>{date}</span>
+                  <span className={`${isCurrentDate ? 'text-white' : ''}`}>
+                    {date}
+                  </span>
                 </div>
               </div>
             );
-          })}
+          })}     
         </div>
-        <hr className='w-full border border-slate-300 dark:border-gray-700 mt-4 overflow-x-auto' />
 
         {/* Vertical Line for Current Date */}
         {currentDatePosition > 0 && currentDatePosition <= timelineLength && (
           <div
-            className="absolute top-0 bottom-0 left-0 w-0.5 bg-blue-600"
+            className="absolute top-0 min-h-screen h-full w-0.5 bg-indigo-500 z-50" 
             style={{
-              left: `${(currentDatePosition - 1) * (100 / timelineLength)}%`,
+              left: `${((currentDatePosition - 1) * 100) / timelineLength}%`, 
             }}
           ></div>
         )}
 
-        {/* Task Bars */}
-        <div className="grid grid-cols-[repeat(14,_minmax(100px,_1fr))] gap-4 mt-4">
-          {data.tasks.map((task) => {
-            const daysFromStart = getDaysDifference(timelineStart, task.start) + 1;
-            const taskDuration = getDaysDifference(task.start, task.end) + 1;
+
+        {/* Event Bars */}
+        <div className="relative grid grid-cols-[repeat(14,_minmax(100px,_1fr))] gap-4 mt-4 z-10">
+          {data.events.map((event) => {
+            const daysFromStart = getDaysDifference(timelineStart, event.start) + 1;
+            const eventDuration = getDaysDifference(event.start, event.end) + 1;
 
             return (
               <div
-                key={task.id}
+                key={event.id}
                 className="flex items-center p-8"
                 style={{
                   gridColumnStart: daysFromStart,
-                  gridColumnEnd: daysFromStart + taskDuration,
+                  gridColumnEnd: daysFromStart + eventDuration,
                 }}
               >
                 <div className="flex items-center space-x-4">
                   <div className="w-2 h-full bg-green-500 rounded-full"></div>
                   <div className="bg-white dark:bg-neutral-800 p-4 pr-8 shadow-lg rounded-lg flex space-x-8">
                     {/* Colored line for progress */}
-                    <div className="flex-shrink-0 w-1" style={{ backgroundColor: task.color }}></div>
-                    {/* Task details */}
+                    <div className="flex-shrink-0 w-1" style={{ backgroundColor: event.color }}></div>
+                    {/* event details */}
                     <div className="w-fit">
-                      <p className="text-sm font-medium text-gray-700 dark:text-white">
-                        {task.tag}
-                      </p>
-                      <p className="text-gray-700 dark:text-white font-bold text-base">
-                        {task.description}
-                      </p>
+                      <p className="text-sm font-medium text-gray-700 dark:text-white">{event.tag}</p>
+                      <p className="text-gray-700 dark:text-white font-bold text-base">{event.description}</p>
                     </div>
                   </div>
                 </div>
@@ -93,6 +110,26 @@ const CustomGanttTimeline: React.FC = () => {
           })}
         </div>
       </div>
+      <Popover>
+        <PopoverButton 
+          className="bg-white dark:bg-zinc-900 shadow-3xl rounded-full p-4 fixed bottom-32 right-8 z-50"
+        >
+          <PlusIcon className="w-5 h-5 text-gray-700 dark:text-white" />
+        </PopoverButton>
+        <Transition
+            as={Fragment}
+            enter="transition ease-out duration-200"
+            enterFrom="opacity-0 translate-y-1"
+            enterTo="opacity-100 translate-y-0"
+            leave="transition ease-in duration-150"
+            leaveFrom="opacity-100 translate-y-0"
+            leaveTo="opacity-0 translate-y-1"
+          >
+            <PopoverPanel className="fixed right-0 top-0 overflow-auto w-[30%] h-full min-h-screen z-50 bg-white dark:bg-neutral-800 shadow-3xl p-8">
+              <AddEvent />
+            </PopoverPanel>
+          </Transition>
+      </Popover>
     </div>
   );
 };

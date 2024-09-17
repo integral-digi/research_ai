@@ -1,18 +1,19 @@
-"use client";
-import { createContext, useContext, useState, ReactNode } from 'react';
+"use client"
+import FeatureCard from "@/app/components/FeatureBox";
+import { createContext, useContext, useState } from "react";
 
 interface TabData {
   id: number;
   title: string;
-  content: React.ReactNode; 
+  content: React.ReactNode;
 }
 
 interface TabContextProps {
   tabs: TabData[];
-  activeTabIndex: number;
-  addNewTab: (title: string, content: string) => void; 
+  activeTabId: number | null;
+  addNewTab: (title: string, content: React.ReactNode) => void;
   closeTab: (id: number) => void;
-  setActiveTabIndex: (index: number) => void;
+  setActiveTabId: (id: number) => void;
 }
 
 const TabContext = createContext<TabContextProps | undefined>(undefined);
@@ -20,38 +21,31 @@ const TabContext = createContext<TabContextProps | undefined>(undefined);
 export const useTabs = () => {
   const context = useContext(TabContext);
   if (!context) {
-    throw new Error('useTabs must be used within a TabProvider');
+    throw new Error("useTabs must be used within a TabProvider");
   }
   return context;
 };
 
-export const TabProvider = ({ children }: { children: ReactNode }) => {
-  const [tabs, setTabs] = useState<TabData[]>([]);
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
+export const TabProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [tabs, setTabs] = useState<TabData[]>([{ id: 1, title: "New Tab", content: <FeatureCard /> }]);
+  const [activeTabId, setActiveTabId] = useState<number>(1);
 
-  // Add a new tab with title and content
-  const addNewTab = (title: string, content: string) => {
-    const newTabId = tabs.length;
-    const newTab = { id: newTabId, title, content };
-    setTabs((prevTabs) => [...prevTabs, newTab]);
-    setActiveTabIndex(newTabId);
+  const addNewTab = (title: string, content: React.ReactNode) => {
+    const newTabId = Date.now(); // Generate unique ID based on timestamp
+    setTabs((prevTabs) => [...prevTabs, { id: newTabId, title, content }]);
+    setActiveTabId(newTabId); // Set the new tab as active
   };
 
-  // Close an existing tab
   const closeTab = (id: number) => {
-    const updatedTabs = tabs.filter((tab) => tab.id !== id);
-    setTabs(updatedTabs);
-
-    // Adjust active tab index
-    if (id === activeTabIndex && updatedTabs.length > 0) {
-      setActiveTabIndex(Math.max(0, activeTabIndex - 1));
-    } else if (id < activeTabIndex) {
-      setActiveTabIndex((prevIndex) => prevIndex - 1);
+    setTabs((prevTabs) => prevTabs.filter(tab => tab.id !== id));
+    // Automatically switch to another tab if the active one is closed
+    if (activeTabId === id && tabs.length > 1) {
+      setActiveTabId(tabs[0].id);
     }
   };
 
   return (
-    <TabContext.Provider value={{ tabs, activeTabIndex, addNewTab, closeTab, setActiveTabIndex }}>
+    <TabContext.Provider value={{ tabs, activeTabId, addNewTab, closeTab, setActiveTabId }}>
       {children}
     </TabContext.Provider>
   );

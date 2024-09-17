@@ -1,8 +1,10 @@
-import CanvasHome from "@/app/canvas/page";
-import ChatHome from "@/app/chat/page";
-import Home from "@/app/page";
-import TimelineHome from "@/app/timeline/page";
-import { CalendarIcon, DocumentTextIcon, PresentationChartLineIcon } from "@heroicons/react/24/solid";
+import CanvasTabView from "@/app/canvas/components/TabView";
+import ChatTabView from "@/app/chat/components/TabView";
+import PDFTabView from "@/app/pdf-viewer/components/TabView";
+import TimelineTabView from "@/app/timeline/components/TabView";
+import LogoIcon from "@/public/assets/LogoIcon";
+import { CalendarIcon, DocumentCheckIcon, DocumentTextIcon, PresentationChartLineIcon } from "@heroicons/react/24/solid";
+
 
 export const data = {
   user: {
@@ -19,15 +21,25 @@ export const data = {
         { id: '1.3', label: 'Group photo', fileType: 'image' },
       ],
     },
+    {
+      id: '5',
+      label: 'Root Folder',
+      fileType: 'folder',
+      children: [
+        { id: '5.1', label: 'Document 1', fileType: 'doc' },
+        { id: '5.2', label: 'Image 1', fileType: 'image' }, 
+      ],
+    },
     { id: '2', label: 'Bookmarked', fileType: 'pinned', children: [{ id: '2.1', label: 'Learning materials', fileType: 'folder' }] },
     { id: '3', label: 'History', fileType: 'folder' },
     { id: '4', label: 'Trash', fileType: 'trash' },
   ],
   features: [
-    { id: 1, title: "Create a New Markdown", href: <Home />, image: <DocumentTextIcon className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> },
-    { id: 2, title: "Create a New Canvas", href: <CanvasHome />, image: <PresentationChartLineIcon className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> },
-    { id: 3, title: "Create a New Timeline", href: <TimelineHome />,image: <CalendarIcon className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> },
-    { id: 4, title: "Chat with Research AI", href: <ChatHome />, image: <img src="/assets/research-logo.svg" alt="logo" className="w-5 h-5 p-6 text-gray-700 dark:text-white" /> }
+    { id: 1, title: "Create a New Markdown", content: "", image: DocumentTextIcon   },
+    { id: 2, title: "Create a New Canvas", content: CanvasTabView, image: PresentationChartLineIcon  },
+    { id: 3, title: "Create a New Timeline", content: TimelineTabView, image: CalendarIcon  },
+    // { id: 4, title: "View PDF", content:PDFTabView , image: DocumentCheckIcon  },
+    { id: 5, title: "Chat with Research AI", content: ChatTabView, image: LogoIcon  }
   ],
   chatData: {
       id: 1,
@@ -56,8 +68,8 @@ export const data = {
       isActive: true,
       unreadCount: 3
   },
-  // Sample tasks
-  tasks: [
+  // Sample events
+  events: [
     {
       id: "1",
       name: "Design Phase",

@@ -4,8 +4,8 @@ import moment from 'moment';
 import "frappe-gantt/dist/frappe-gantt.css";
 import { data } from '@/utils/data';
 
-// type structure of any task
-interface Task {
+// type structure of any event
+interface Event {
   id: string;
   name: string;
   startDate: string;
@@ -19,12 +19,12 @@ interface Task {
 // Format the date to display as "Wed 5", "Thu 6", etc.
 const formatDate = (date: string) => moment(date).format('ddd D');
 
-// Create the task cards with progress line, tag, and description
+// Create the event cards with progress line, tag, and description
 const Timeline: React.FC = () => {
-  const timelineItems = data.tasks.map(task => ({
-    title: formatDate(task.start),
-    cardTitle: task.tag,
-    cardDetailedText: task.description,
+  const timelineItems = data.events.map(event => ({
+    title: formatDate(event.start),
+    cardTitle: event.tag,
+    cardDetailedText: event.description,
   }));
 
   return (

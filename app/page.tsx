@@ -1,33 +1,26 @@
 "use client";
-import { data } from "@/utils/data";
 import RightPanel from "./components/RightPanel";
 import MenuBar from "./components/MenuBar";
-import FeatureCard from "./components/FeatureBox";
-import { useTabs } from "@/context/TabContext";
-import { Tab, TabGroup, TabPanels, TabPanel } from '@headlessui/react';
+import Channel from "./components/Channel";
 
 const Home = () => {
-  const { tabs, activeTabIndex, setActiveTabIndex } = useTabs();
-
   return (
     <main className="w-full bg-white dark:bg-neutral-800">
-      <section className="top-0 w-full">
+      {/* Top Section containing the MenuBar */}
+      <section className="top-0 w-full h-24">
         <MenuBar />
       </section>
+
+      {/* Main Content Section */}
       <section className="w-full flex items-start">
+        {/* Left Sidebar */}
         <section className="w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900">
-          <RightPanel menuItems={data.items} />
+          <RightPanel />
         </section>
-        <section className="w-[80%]">
-          <TabGroup selectedIndex={activeTabIndex} onChange={setActiveTabIndex}>
-            <TabPanels>
-              {tabs.map((tab) => (
-                <TabPanel key={tab.id} className="w-full flex justify-center items-center mt-8">
-                  <FeatureCard />
-                </TabPanel>
-              ))}
-            </TabPanels>
-          </TabGroup>
+
+        {/* Right Content Section where TabPanels are displayed */}
+        <section className="w-[80%] relative">
+          <Channel />
         </section>
       </section>
     </main>

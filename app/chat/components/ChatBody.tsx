@@ -1,8 +1,10 @@
-"use client"
+"use client";
 import ChatInput from "./ChatInput";
 import { data } from "@/utils/data";
 import { DocumentDuplicateIcon, EllipsisVerticalIcon } from "@heroicons/react/24/solid";
-import { memo, useCallback } from "react";
+import { memo, useCallback, useState } from "react";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const ChatBody = ({ id }: { id: string }) => {
   return (
@@ -33,28 +35,34 @@ const ChatBody = ({ id }: { id: string }) => {
 const ChatBubble = memo(
   ({ role, message }: { role: string; message: string }) => {
     const isUser = role === "user";
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
     const handleCopyToClipboard = useCallback(() => {
       navigator.clipboard.writeText(message).then(() => {
-        alert("Message copied to clipboard!");
+        setSnackbarOpen(true);
       });
     }, [message]);
 
+    const handleCloseSnackbar = () => {
+      setSnackbarOpen(false);
+    };
+
     return (
-      <div className="w-full" 
-      >
-        <div className={`w-[90%] lg:w-[60%] ${
-        isUser ? "ml-auto bg-white dark:bg-neutral-800" : "mr-auto bg-slate-100 dark:bg-zinc-900"
-        } border border-slate-300 dark:border-gray-700 rounded-2xl p-4 shadow-sm clear-both`}>
-            <p className="text-base font-normal text-gray-700 dark:text-white">
-                {message}
-            </p>
+      <div className="w-full h-full">
+        <div 
+          className={`w-[90%] lg:w-[60%] ${
+          isUser ? "ml-auto bg-white dark:bg-neutral-800" : "mr-auto bg-slate-100 dark:bg-zinc-900"
+          } border border-slate-300 dark:border-gray-700 rounded-2xl p-4 shadow-sm clear-both`}
+        >
+          <p className="text-base font-normal text-gray-700 dark:text-white">
+              {message}
+          </p>
         </div>
     
         {role === "chatbot" && (
           <div className="px-4 w-[90%] lg:w-[60%]">
             <div className="w-full flex items-baseline justify-between space-x-2">
-              <section className="rounded-lg bg-white dark:bg-neutral-800 p-2">
+              <section className="rounded-lg p-2">
                 <img
                     src="/assets/research-icon.svg"
                     alt="Research logo"
@@ -80,6 +88,20 @@ const ChatBubble = memo(
             </div>
           </div>
         )}
+
+        {/* Snackbar for showing copy success */}
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          onClose={handleCloseSnackbar}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        >
+          <Alert onClose={handleCloseSnackbar} severity="success" variant="filled">
+            <p className="font-medium">
+              Message copied to clipboard!
+            </p>
+          </Alert>
+        </Snackbar>
       </div>
     );
   }

@@ -1,17 +1,25 @@
-"use client"
-import { Dialog, DialogPanel, DialogTitle, Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
-import { Fragment } from 'react';
+"use client";
+import {
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+    Tab,
+    TabGroup,
+    TabList,
+    TabPanel,
+    TabPanels
+} from '@headlessui/react';
 import { useModal } from '@/context/ModalProvider';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 
 const SettingsModal = () => {
-    const {isOpen, closeSettingsModal} = useModal();
+    const { isOpen, toggleModal } = useModal();
     const tabItems = [
         { name: 'Edit Profile' },
         { name: 'Notifications' },
         { name: 'Security' },
-        { name: 'Files' },
+        { name: 'Vault' },
         { name: 'Plugins' },
         { name: 'Team' },
         { name: 'Appearance' },
@@ -22,9 +30,9 @@ const SettingsModal = () => {
         <>
             <Dialog
                 as="div"
-                className="relative z-10"
+                className="relative z-50"
                 open={isOpen}
-                onClose={closeSettingsModal}
+                onClose={() => toggleModal(false)} 
             >
                 <div className="fixed inset-0 bg-black bg-opacity-30" />
                 
@@ -34,10 +42,14 @@ const SettingsModal = () => {
                             <DialogTitle className="text-lg font-medium text-gray-900">
                                 Settings
                             </DialogTitle>
-                            <button onClick={closeSettingsModal} className="text-gray-400 hover:text-gray-600">
+                            <button
+                                onClick={() => toggleModal(false)}
+                                className="text-gray-400 hover:text-gray-600"
+                            >
                                 <XMarkIcon className="w-5 h-5" />
                             </button>
                         </div>
+
                         <TabGroup>
                             <div className="flex">
                                 {/* Tab List (Vertical Navigation) */}
@@ -64,43 +76,43 @@ const SettingsModal = () => {
                                     <TabPanel>
                                         <h3 className="text-lg font-medium text-gray-900">Edit Profile</h3>
                                         <p className="mt-2 text-sm text-gray-600">
-                                            Here you can update your profile information.
+                                            Profile information.
                                         </p>
                                     </TabPanel>
                                     <TabPanel>
                                         <h3 className="text-lg font-medium text-gray-900">Notifications</h3>
                                         <p className="mt-2 text-sm text-gray-600">
-                                            Manage your notification settings.
+                                            Notification settings.
                                         </p>
                                     </TabPanel>
                                     <TabPanel>
                                         <h3 className="text-lg font-medium text-gray-900">Security</h3>
                                         <p className="mt-2 text-sm text-gray-600">
-                                            Manage your security settings and passwords.
+                                            Security settings.
                                         </p>
                                     </TabPanel>
                                     <TabPanel>
                                         <h3 className="text-lg font-medium text-gray-900">Files</h3>
                                         <p className="mt-2 text-sm text-gray-600">
-                                            Manage your uploaded files.
+                                            Vault.
                                         </p>
                                     </TabPanel>
                                     <TabPanel>
                                         <h3 className="text-lg font-medium text-gray-900">Plugins</h3>
                                         <p className="mt-2 text-sm text-gray-600">
-                                            Manage your installed plugins.
+                                            Plugins.
                                         </p>
                                     </TabPanel>
                                     <TabPanel>
                                         <h3 className="text-lg font-medium text-gray-900">Team</h3>
                                         <p className="mt-2 text-sm text-gray-600">
-                                            Manage your team settings and members.
+                                            Team.
                                         </p>
                                     </TabPanel>
                                     <TabPanel>
                                         <h3 className="text-lg font-medium text-gray-900">Appearance</h3>
                                         <p className="mt-2 text-sm text-gray-600">
-                                            Customize the appearance of your application.
+                                            Appearance.
                                         </p>
                                     </TabPanel>
                                     <TabPanel>

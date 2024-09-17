@@ -6,7 +6,7 @@ interface TitleProps {
 
 const TitleBar:React.FC<TitleProps> = ( {title} ) => {
     return (
-        <div className="w-full h-[4.5rem] bg-white dark:bg-neutral-800 shadow-3xl flex items-center">
+        <div className="z-50 w-full h-[4.5rem] bg-white dark:bg-neutral-800 shadow-3xl flex items-center">
             <div className="w-full">
                 <div className="w-full flex items-center justify-between px-8">
                     <section className="space-x-16 flex items-center">

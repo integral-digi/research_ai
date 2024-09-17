@@ -2,11 +2,11 @@
 import Link from "next/link";
 import Toggler from "./Toggler";
 import { ArrowLeftStartOnRectangleIcon, QuestionMarkCircleIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
 const menuItems = [
-  { id: 1, name: "Account Settings", icon: <UserCircleIcon className="w-5 h-5 text-gray-700 dark:text-white" />, href: "/profile" },
-  { id: 2, name: "Help", icon: <QuestionMarkCircleIcon className="w-5 h-5 text-gray-700 dark:text-white" />, href: "#" },
-  { id: 3, name: "Logout", icon: <ArrowLeftStartOnRectangleIcon className="w-5 h-5 text-gray-700 dark:text-white" />, href: "/login" },
+  { id: 1, name: "Help", icon: <QuestionMarkCircleIcon className="w-5 h-5 text-gray-700 dark:text-white" />, href: "#" },
+  { id: 2, name: "Logout", icon: <ArrowLeftStartOnRectangleIcon className="w-5 h-5 text-gray-700 dark:text-white" />, href: "/login" },
 ];
 
 const darkItem = {
@@ -16,7 +16,7 @@ const darkItem = {
 
 const AccDropdown = () => {
   return (
-    <div className="w-72 h-60 relative bg-white dark:bg-neutral-800  rounded-xl drop-shadow-lg">
+    <div className="w-72 h-fit relative bg-white dark:bg-neutral-800  rounded-xl drop-shadow-lg">
       <div className="space-y-6 p-8">
         <div className="space-y-6">
             {menuItems.map((item) => (

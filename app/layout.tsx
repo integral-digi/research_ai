@@ -4,6 +4,7 @@ import "./globals.css";
 import { ModalProvider } from "@/context/ModalProvider";
 import { DarkModeProvider } from "@/context/DarkModeContext";
 import { TabProvider } from "@/context/TabContext";
+import { NavTreeProvider } from "@/context/TreeContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,13 +31,15 @@ export default function RootLayout({
     <DarkModeProvider>
       <TabProvider>
         <ModalProvider>
-          <html lang="en">
-            <body
-              className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-              {children}
-            </body>
-          </html>
+          <NavTreeProvider>
+            <html lang="en">
+              <body
+                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+              >
+                {children}
+              </body>
+            </html>
+          </NavTreeProvider>
         </ModalProvider>
       </TabProvider>
     </DarkModeProvider>
