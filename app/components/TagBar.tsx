@@ -1,3 +1,4 @@
+"use client"
 import { Fragment, useState } from 'react';
 import { Checkbox } from '@headlessui/react';
 
