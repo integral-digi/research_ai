@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import { LinearProgress } from "@mui/material";
 import {
@@ -10,7 +9,7 @@ import {
   ArrowsPointingInIcon,
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
-// @ts-expect-error
+// @ts-expect-error dev types can't be inferred
 import * as pdfjsLib from 'pdfjs-dist/build/pdf';
 import "pdfjs-dist/build/pdf.worker.entry";
 

@@ -12,10 +12,10 @@ import {
 } from "@heroicons/react/24/outline";
 import { memo } from "react";
 
-// Debounce function to prevent multiple clicks
-const debounce = (func: Function, delay: number) => {
+// Define a more specific type for the debounce function
+const debounce = (func: (...args: any[]) => void, delay: number) => {
   let timeoutId: NodeJS.Timeout;
-  return (...args: any) => {
+  return (...args: any[]) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
       func(...args);
@@ -31,7 +31,7 @@ const Panel = ({
   handleResetCanvas,
   handleRedo,
   handleUndo,
-  handleAddStickyNote, 
+  handleAddStickyNote,
   handleActivateDrawing,
   isDrawingActive,
 }: any) => {

@@ -55,7 +55,7 @@ const ChatBubble = memo(
           } border border-slate-300 dark:border-gray-700 rounded-2xl p-4 shadow-sm clear-both`}
         >
           <p className="text-base font-normal text-gray-700 dark:text-white">
-              {message}
+            {message}
           </p>
         </div>
     
@@ -106,5 +106,8 @@ const ChatBubble = memo(
     );
   }
 );
+
+// Display Name
+ChatBubble.displayName = "ChatBubble";
 
 export default ChatBody;
