@@ -1,19 +1,10 @@
-"use client"
-import { Fragment, useState } from "react";
+"use client";
+import { useState } from "react";
 import { Checkbox } from "@headlessui/react";
-
 
 const TagBar: React.FC = () => {
   const [globalTagsChecked, setGlobalTagsChecked] = useState(false);
   const [documentTagsChecked, setDocumentTagsChecked] = useState(false);
-
-  const handleGlobalTagsChange = (checked: boolean) => {
-    setGlobalTagsChecked(checked);
-  };
-
-  const handleDocumentTagsChange = (checked: boolean) => {
-    setDocumentTagsChecked(checked);
-  };
 
   return (
     <div className="w-full h-16 flex items-center bg-white dark:bg-neutral-800 shadow-3xl">
@@ -21,9 +12,9 @@ const TagBar: React.FC = () => {
         {/* Global Tags Checkbox */}
         <div className="flex items-center space-x-2">
           <Checkbox
-            as={Fragment}
             checked={globalTagsChecked}
-            onChange={handleGlobalTagsChange}
+            onChange={setGlobalTagsChecked}
+            className="w-5 h-5 rounded-lg border-2 flex items-center justify-center"
           >
             {({ checked }) => (
               <div
@@ -56,9 +47,9 @@ const TagBar: React.FC = () => {
         {/* Document Tags Checkbox */}
         <div className="flex items-center space-x-2">
           <Checkbox
-            as={Fragment}
             checked={documentTagsChecked}
-            onChange={handleDocumentTagsChange}
+            onChange={setDocumentTagsChecked}
+            className="w-5 h-5 rounded-lg border-2 flex items-center justify-center"
           >
             {({ checked }) => (
               <div
