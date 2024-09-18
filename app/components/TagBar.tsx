@@ -38,7 +38,9 @@ const TagBar = () => {
                     </div>
                 )}
                 </Checkbox>
-                <span className="text-sm font-medium text-gray-700">Global Tags</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-white">
+                    Global Tags
+                </span>
             </div>
 
             {/* Document Tags Checkbox */}
@@ -71,7 +73,7 @@ const TagBar = () => {
                     </div>
                 )}
                 </Checkbox>
-                <span className="text-sm font-medium text-gray-700">Document Tags</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-white">Document Tags</span>
             </div>
         </div>
     </div>
