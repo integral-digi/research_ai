@@ -35,141 +35,143 @@ const getIconFromFileType = (fileType?: string) => {
 };
 
 const CustomTreeItem = forwardRef<HTMLLIElement, any>(
-  ({ id, label, fileType, children, isEditable, ...other }, ref) => {
-    const { addNewItem, updateItemLabel, removeItem } = useNavTreeContext();
-    const expandable = !!children?.length;
-    const Icon = getIconFromFileType(fileType);
-
-    const [isExpanded, setIsExpanded] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    const [currentLabel, setCurrentLabel] = useState(label);
-
-    const handleToggle = () => {
-      setIsExpanded((prev) => !prev);
-    };
-
-    const handleLabelClick = () => {
-      if (isEditable) {
-        setIsEditing(true);
-      }
-    };
-
-    const handleBlur = () => {
-      if (currentLabel.trim() !== label) {
-        updateItemLabel(id, currentLabel);
-      }
-      setIsEditing(false);
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCurrentLabel(e.target.value);
-    };
-
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-        handleBlur();
-      }
-    };
-
-    const handlePlusClick = () => {
-      addNewItem(id, {
-        id: Date.now().toString(),
-        label: "New Item",
-        fileType: "doc",
-      });
-    };
-
-    const handleDeleteClick = () => {
-      removeItem(id);
-    };
-
-    return (
-      <li
-        ref={ref}
-        {...other}
-        className="relative"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div
-          className={clsx(
-            "flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-neutral-800",
-            expandable && "cursor-pointer"
-          )}
-          onClick={handleToggle}
+    ({ id, label, fileType, children, isEditable, ...other }, ref) => {
+      const { addNewItem, updateItemLabel, removeItem } = useNavTreeContext();
+      const expandable = !!children?.length;
+      const Icon = getIconFromFileType(fileType);
+  
+      const [isExpanded, setIsExpanded] = useState(false);
+      const [isHovered, setIsHovered] = useState(false);
+      const [isEditing, setIsEditing] = useState(false);
+      const [currentLabel, setCurrentLabel] = useState(label);
+  
+      const handleToggle = () => {
+        setIsExpanded((prev) => !prev);
+      };
+  
+      const handleLabelClick = () => {
+        if (isEditable) {
+          setIsEditing(true);
+        }
+      };
+  
+      const handleBlur = () => {
+        if (currentLabel.trim() !== label) {
+          updateItemLabel(id, currentLabel);
+        }
+        setIsEditing(false);
+      };
+  
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCurrentLabel(e.target.value);
+      };
+  
+      const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+          handleBlur();
+        }
+      };
+  
+      const handlePlusClick = () => {
+        addNewItem(id, {
+          id: Date.now().toString(),
+          label: "New Item",
+          fileType: "doc",
+        });
+      };
+  
+      const handleDeleteClick = () => {
+        removeItem(id);
+      };
+  
+      return (
+        <li
+          ref={ref}
+          {...other}
+          className="relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          {isEditing ? (
-            <input
-              type="text"
-              value={currentLabel}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              onKeyDown={handleKeyDown}
-              autoFocus
-              className="bg-white dark:bg-neutral-800 text-gray-700 dark:text-white font-medium"
-            />
-          ) : (
-            <div onDoubleClick={handleLabelClick}>
-              <CustomLabel icon={Icon} expandable={expandable}>
-                {currentLabel}
-              </CustomLabel>
-            </div>
-          )}
-
-          {expandable && (
-            <ChevronRightIcon
-              className={clsx(
-                "w-5 h-5 ml-auto transition-transform text-gray-700 dark:text-white",
-                isExpanded && "rotate-90"
-              )}
-            />
-          )}
-
-          {isHovered && (
-            <>
-              <PlusIcon
-                className="w-5 h-5 text-gray-700 dark:text-white ml-auto cursor-pointer"
-                onClick={handlePlusClick}
-              />
-              <TrashIcon
-                className="w-5 h-5 text-gray-700 dark:text-white ml-2 cursor-pointer"
-                onClick={handleDeleteClick}
-              />
-            </>
-          )}
-        </div>
-
-        {expandable && (
-          <Transition
-            show={isExpanded}
-            enter="transition ease-in duration-200"
-            enterFrom="opacity-0 transform scale-95"
-            enterTo="opacity-100 transform scale-100"
-            leave="transition ease-out duration-100"
-            leaveFrom="opacity-100 transform scale-100"
-            leaveTo="opacity-0 transform scale-95"
+          <div
+            className={clsx(
+              "flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-neutral-800",
+              expandable && "cursor-pointer"
+            )}
+            onClick={handleToggle}
           >
-            <ul className="ml-6">{children}</ul>
-          </Transition>
-        )}
-      </li>
-    );
-  }
-);
-
-const CustomLabel = ({ icon: Icon, expandable, children }: any) => (
-  <div className="flex items-center space-x-4">
-    {Icon && (
-      <Icon className="w-5 h-5 mr-2 text-gray-700 dark:text-white" />
-    )}
-    <span className="text-gray-700 dark:text-white font-medium">
-      {children}
-    </span>
-    {expandable && (
-      <span className="inline-block w-2 h-2 rounded-full bg-white dark:bg-neutral-800 mx-2" />
-    )}
-  </div>
-);
-
-export default CustomTreeItem;
+            {isEditing ? (
+              <input
+                type="text"
+                value={currentLabel}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                onKeyDown={handleKeyDown}
+                autoFocus
+                className="bg-white dark:bg-neutral-800 text-gray-700 dark:text-white font-medium"
+              />
+            ) : (
+              <div onDoubleClick={handleLabelClick}>
+                <CustomLabel icon={Icon} expandable={expandable}>
+                  {currentLabel}
+                </CustomLabel>
+              </div>
+            )}
+  
+            {expandable && (
+              <ChevronRightIcon
+                className={clsx(
+                  "w-5 h-5 ml-auto transition-transform text-gray-700 dark:text-white",
+                  isExpanded && "rotate-90"
+                )}
+              />
+            )}
+  
+            {isHovered && (
+              <>
+                <PlusIcon
+                  className="w-5 h-5 text-gray-700 dark:text-white ml-auto cursor-pointer"
+                  onClick={handlePlusClick}
+                />
+                <TrashIcon
+                  className="w-5 h-5 text-gray-700 dark:text-white ml-2 cursor-pointer"
+                  onClick={handleDeleteClick}
+                />
+              </>
+            )}
+          </div>
+  
+          {expandable && (
+            <Transition
+              show={isExpanded}
+              enter="transition ease-in duration-200"
+              enterFrom="opacity-0 transform scale-95"
+              enterTo="opacity-100 transform scale-100"
+              leave="transition ease-out duration-100"
+              leaveFrom="opacity-100 transform scale-100"
+              leaveTo="opacity-0 transform scale-95"
+            >
+              <ul className="ml-6">{children}</ul>
+            </Transition>
+          )}
+        </li>
+      );
+    }
+  );
+  
+  // Component display name 
+  CustomTreeItem.displayName = "CustomTreeItem";
+  
+  const CustomLabel = ({ icon: Icon, expandable, children }: any) => (
+    <div className="flex items-center space-x-4">
+      {Icon && <Icon className="w-5 h-5 mr-2 text-gray-700 dark:text-white" />}
+      <span className="text-gray-700 dark:text-white font-medium">
+        {children}
+      </span>
+      {expandable && (
+        <span className="inline-block w-2 h-2 rounded-full bg-white dark:bg-neutral-800 mx-2" />
+      )}
+    </div>
+  );
+  
+  export default CustomTreeItem;
+  
