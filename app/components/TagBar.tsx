@@ -74,7 +74,9 @@ const TagBar = () => {
                     </div>
                 )}
                 </Checkbox>
-                <span className="text-sm font-medium text-gray-700 dark:text-white">Document Tags</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-white">
+                    Document Tags
+                </span>
             </div>
         </div>
     </div>
