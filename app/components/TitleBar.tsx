@@ -1,3 +1,4 @@
+"use client"
 import { Popover, PopoverButton, PopoverPanel, Transition } from "@headlessui/react";
 import { ArrowLeftIcon, ArrowRightIcon, BookmarkIcon, EllipsisVerticalIcon, TrashIcon } from "@heroicons/react/24/outline";
 import TagBar from "./TagBar";
@@ -7,11 +8,11 @@ interface TitleProps {
     title: string;
 }
 
-const handleClick = () => {
-    console.log("I've been clicked")
-}
-
 const TitleBar:React.FC<TitleProps> = ( {title} ) => {
+    const handleClick = () => {
+        console.log("I've been clicked")
+    }
+    
     return (
         <div className="z-30 w-full h-[4.5rem] bg-white dark:bg-neutral-800 shadow-3xl flex items-center relative">
             <div className="w-full">
