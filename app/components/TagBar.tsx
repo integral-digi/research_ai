@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Checkbox } from "@headlessui/react";
 import CheckboxOne from "@/public/assets/CheckBox";
+import CheckBoxTwo from "@/public/assets/CheckBoxTwo";
 
 const TagBar: React.FC = () => {
   const [globalTagsChecked, setGlobalTagsChecked] = useState(false);
@@ -48,7 +49,7 @@ const TagBar: React.FC = () => {
                 } flex items-center justify-center`}
               >
                 {checked && (
-                    <CheckboxTwo />
+                    <CheckBoxTwo />
                 )}
               </div>
             )}
