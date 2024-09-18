@@ -19,7 +19,7 @@ const TagBar = () => {
                 {({ checked }) => (
                     <div
                         className={`w-5 h-5 rounded-lg border-2 ${
-                            checked ? 'bg-blue-500 border-blue-500' : 'bg-white border-gray-300'
+                            checked ? 'bg-blue-500 border-blue-500' : 'bg-white border-slate-300'
                         } flex items-center justify-center`}
                     >
                     {checked && (
@@ -54,7 +54,7 @@ const TagBar = () => {
                 {({ checked }) => (
                     <div
                         className={`w-5 h-5 rounded-lg border-2 ${
-                            checked ? 'bg-green-500 border-green-500' : 'bg-white border-gray-300'
+                            checked ? 'bg-green-500 border-green-500' : 'bg-white border-slate-300'
                         } flex items-center justify-center`}
                     >
                     {checked && (
