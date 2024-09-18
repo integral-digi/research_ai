@@ -1,16 +1,9 @@
 "use client";
 import { useNavTreeContext } from "@/context/TreeContext";
-import { ArrowRightIcon, FolderIcon } from "@heroicons/react/24/outline";
-import React from "react";
+import { FolderIcon } from "@heroicons/react/24/outline";
 
 const AddFolder: React.FC = () => {
-  const {
-    addNewItem,
-    showNewFolderInput,
-    setShowNewFolderInput,
-    newFolderName,
-    setNewFolderName,
-  } = useNavTreeContext();
+  const { setShowNewFolderInput } = useNavTreeContext();
 
   const handleAddFolder = () => {
     setShowNewFolderInput(true);

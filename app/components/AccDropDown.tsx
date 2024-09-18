@@ -1,8 +1,7 @@
 "use client"
 import Link from "next/link";
 import Toggler from "./Toggler";
-import { ArrowLeftStartOnRectangleIcon, QuestionMarkCircleIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { ArrowLeftStartOnRectangleIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
 
 const menuItems = [
   { id: 1, name: "Help", icon: <QuestionMarkCircleIcon className="w-5 h-5 text-gray-700 dark:text-white" />, href: "#" },

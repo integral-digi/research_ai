@@ -9,7 +9,7 @@ const Toggler: React.FC = () => {
         document.body.classList.toggle('dark', darkMode);
     }, [darkMode]);
 
-    const handleChange = (value: boolean) => {
+    const handleChange = () => {
         toggleDarkMode();
     };
 

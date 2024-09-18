@@ -12,7 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { memo } from "react";
 
-// Debounce function to prevent rapid clicks
+// Debounce function to prevent multiple clicks
 const debounce = (func: Function, delay: number) => {
   let timeoutId: NodeJS.Timeout;
   return (...args: any) => {

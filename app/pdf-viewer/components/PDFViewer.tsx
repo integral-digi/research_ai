@@ -10,7 +10,7 @@ import {
   ArrowsPointingInIcon,
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
-// @ts-ignore
+// @ts-expect-error
 import * as pdfjsLib from 'pdfjs-dist/build/pdf';
 import "pdfjs-dist/build/pdf.worker.entry";
 
