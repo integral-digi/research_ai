@@ -32,7 +32,6 @@
     "npm-check": "^3.2.10",
     "pdfjs-dist": "^3.11.174",
     "react": "^18",
-    "react-big-calendar": "^1.13.4",
     "react-calendar-timeline": "^0.28.0",
     "react-chrono": "^2.6.1",
     "react-datepicker": "^7.3.0",

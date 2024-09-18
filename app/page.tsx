@@ -12,14 +12,14 @@ const Home = () => {
       </section>
 
       {/* Main Content Section */}
-      <section className="w-full flex items-start">
+      <section className="w-full flex items-start lg:hidden">
         {/* Left Sidebar */}
         <section className="w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900">
           <RightPanel />
         </section>
 
         {/* Right Content Section where TabPanels are displayed */}
-        <section className="w-[80%] relative">
+        <section className="w-[80%] relative lg:w-full">
           <Channel />
         </section>
       </section>

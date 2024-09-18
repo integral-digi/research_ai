@@ -33,6 +33,7 @@ const Panel = ({
   handleUndo,
   handleAddStickyNote,
   handleActivateDrawing,
+  handleToggleArrowMode,
   isDrawingActive,
 }: any) => {
   const debouncedZoomIn = debounce(handleZoomIn, 150);
@@ -61,7 +62,10 @@ const Panel = ({
             aria-label={isDrawingActive ? "Deactivate freehand drawing" : "Activate freehand drawing"}
             onClick={handleActivateDrawing}
           />
-          <ArrowTurnDownRightIcon className="text-gray-700 dark:text-white w-4 h-4 cursor-pointer hover:text-blue-500" aria-label="Custom action" />
+          <ArrowTurnDownRightIcon 
+            className="text-gray-700 dark:text-white w-4 h-4 cursor-pointer hover:text-blue-500" aria-label="Custom action"
+            onClick={handleToggleArrowMode}
+            />
         </section>
       </div>
       <div className="shadow-3xl h-12 bg-slate-100 dark:bg-zinc-900 px-4 rounded-tr-xl rounded-br-xl">

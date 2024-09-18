@@ -45,7 +45,7 @@ export const NavTreeProvider = ({ children }: { children: React.ReactNode }) => 
     const addRecursively = (nodes: TreeNode[]): TreeNode[] => {
       return nodes.map((node) => {
         if (node.id === parentId) {
-          console.log("Parent found, adding item:", newItem); // Debug log
+          console.log("Parent found, adding item:", newItem); 
           return { ...node, children: [...(node.children || []), newItem] };
         } else if (node.children) {
           return { ...node, children: addRecursively(node.children) };
@@ -56,7 +56,7 @@ export const NavTreeProvider = ({ children }: { children: React.ReactNode }) => 
 
     setTreeData((prev) => {
       const updatedTree = addRecursively(prev);
-      console.log("Updated tree data:", updatedTree); // Debug log
+      console.log("Updated tree data:", updatedTree); 
       return updatedTree;
     });
   };

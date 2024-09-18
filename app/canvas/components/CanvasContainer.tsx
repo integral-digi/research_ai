@@ -1,22 +1,26 @@
 "use client";
 import { useRef, useState, useCallback, useEffect } from "react";
-import { Stage, Layer, Rect, Text, Group, Line, Image as KonvaImage } from "react-konva";
+import { Stage, Layer, Rect, Text, Group, Line, Arrow, Image } from "react-konva";
 import Panel from "./Panel";
 import useImage from "use-image";
 
 const UploadedImage = ({ src, x, y }: { src: string; x: number; y: number }) => {
   const [image] = useImage(src);
-  return <KonvaImage image={image} x={x} y={y} draggable />;
+  return <Image image={image} x={x} y={y} draggable />;
 };
 
 const InfiniteCanvas = () => {
   const [shapes, setShapes] = useState<any[]>([]);
   const [lines, setLines] = useState<any[]>([]);
+  const [arrows, setArrows] = useState<any[]>([]); // State to store arrows
   const [redoStack, setRedoStack] = useState<any[]>([]);
   const [undoStack, setUndoStack] = useState<any[]>([]);
   const [isDrawingActive, setIsDrawingActive] = useState(false);
   const [editingTextIndex, setEditingTextIndex] = useState<number | null>(null);
-  const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 }); // Default size
+  const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
+  const [selectedShape, setSelectedShape] = useState<number | null>(null); // Track selected shape
+  const [isArrowMode, setIsArrowMode] = useState(false);
+  const [arrowStartShape, setArrowStartShape] = useState<number | null>(null); // Starting shape for arrows
 
   const isDrawing = useRef(false);
   const stageRef = useRef<any>(null);
@@ -51,6 +55,9 @@ const InfiniteCanvas = () => {
       const pos = e.target.getStage().getPointerPosition();
       setLines((prevLines) => [...prevLines, { points: [pos.x, pos.y] }]);
       setUndoStack((prev) => [...prev, { action: "draw", line: { points: [pos.x, pos.y] } }]);
+    } else {
+      // Deselect shapes when clicking on empty canvas
+      setSelectedShape(null);
     }
   };
 
@@ -76,11 +83,11 @@ const InfiniteCanvas = () => {
   const handleAddStickyNote = useCallback(() => {
     addShape({
       type: "stickyNote",
-      text: "New Sticky Note",
+      text: "New Note",
       x: 150,
       y: 150,
-      width: 200,
-      height: 150,
+      width: 360,
+      height: 360,
       backgroundColor: "#ffeb3b",
     });
   }, [addShape]);
@@ -139,6 +146,41 @@ const InfiniteCanvas = () => {
     setShapes(updatedShapes);
   };
 
+  const handleSelectShape = (index: number) => {
+    setSelectedShape(index);
+  };
+
+  const handleArrowStart = (index: number) => {
+    if (isArrowMode) {
+      if (arrowStartShape === null) {
+        setArrowStartShape(index);
+      } else {
+        // Draw arrow from start shape to target shape
+        const startShape = shapes[arrowStartShape];
+        const endShape = shapes[index];
+
+        const startX = startShape.x + startShape.width / 2;
+        const startY = startShape.y + startShape.height / 2;
+        const endX = endShape.x + endShape.width / 2;
+        const endY = endShape.y + endShape.height / 2;
+
+        setArrows((prevArrows) => [
+          ...prevArrows,
+          { points: [startX, startY, endX, endY] },
+        ]);
+
+        // Reset arrow drawing mode
+        setArrowStartShape(null);
+        setIsArrowMode(false);
+      }
+    }
+  };
+
+  const handleToggleArrowMode = () => {
+    setIsArrowMode((prev) => !prev);
+    setArrowStartShape(null); // Reset any previous arrow start
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setCanvasSize({ width: window.innerWidth, height: window.innerHeight });
@@ -182,53 +224,31 @@ const InfiniteCanvas = () => {
   };
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <Stage
         ref={stageRef}
         width={canvasSize.width}
         height={canvasSize.height}
-        className="w-max bg-slate-100/20 dark:neutral-800/80"
-        draggable
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       >
         <Layer>
+          {drawGrid()}
+          {lines.map((line, i) => (
+            <Line key={i} points={line.points} stroke="black" strokeWidth={2} />
+          ))}
+          {arrows.map((arrow, i) => (
+            <Arrow key={i} points={arrow.points} stroke="black" fill="black" />
+          ))}
           {shapes.map((shape, index) => {
-            if (shape.type === "rect") {
-              return <Rect key={index} {...shape} />;
-            } else if (shape.type === "text") {
-              return (
-                <Text
-                  key={index}
-                  text={shape.text}
-                  x={shape.x}
-                  y={shape.y}
-                  draggable
-                  fill={shape.isDragging ? "green" : "black"}
-                  onDragStart={() => {
-                    shape.isDragging = true;
-                  }}
-                  onDragEnd={(e) => {
-                    shape.isDragging = false;
-                    shape.x = e.target.x();
-                    shape.y = e.target.y();
-                    setShapes([...shapes]);
-                  }}
-                />
-              );
-            } else if (shape.type === "image") {
-              return <UploadedImage key={index} src={shape.src} x={shape.x} y={shape.y} />;
-            } else if (shape.type === "stickyNote") {
+            if (shape.type === "stickyNote") {
               return (
                 <Group
                   key={index}
                   draggable
-                  onDragEnd={(e) => {
-                    shape.x = e.target.x();
-                    shape.y = e.target.y();
-                    setShapes([...shapes]);
-                  }}
+                  onClick={() => handleSelectShape(index)}
+                  onDblClick={() => handleArrowStart(index)}
                 >
                   <Rect
                     x={shape.x}
@@ -236,8 +256,11 @@ const InfiniteCanvas = () => {
                     width={shape.width}
                     height={shape.height}
                     fill={shape.backgroundColor}
+                    stroke={selectedShape === index ? "blue" : "black"}
+                    strokeWidth={selectedShape === index ? 4 : 1}
                   />
                   {editingTextIndex === index ? (
+                    // Use foreignObject to render editable text
                     <foreignObject
                       x={shape.x + 10}
                       y={shape.y + 10}
@@ -245,14 +268,15 @@ const InfiniteCanvas = () => {
                       height={shape.height - 20}
                     >
                       <textarea
-                        value={shape.text}
+                        value={shape.text} // Set the value of the textarea to the current shape text
                         onChange={(e) => handleTextChange(e, index)}
-                        onBlur={() => setEditingTextIndex(null)}
+                        onBlur={() => setEditingTextIndex(null)} // Exit editing mode on blur
+                        autoFocus // Automatically focus when entering the edit mode
                         style={{
                           width: "100%",
                           height: "100%",
                           fontSize: "18px",
-                          fontFamily: "Arial",
+                          fontFamily: "CircularStd-Book",
                           backgroundColor: "transparent",
                           resize: "none",
                           border: "none",
@@ -261,6 +285,7 @@ const InfiniteCanvas = () => {
                       />
                     </foreignObject>
                   ) : (
+                    // Display static text when not editing
                     <Text
                       text={shape.text}
                       x={shape.x + 10}
@@ -270,15 +295,18 @@ const InfiniteCanvas = () => {
                       fontSize={18}
                       fontFamily="Arial"
                       fill="black"
-                      onDblClick={() => handleTextDoubleClick(index)}
+                      onDblClick={() => handleTextDoubleClick(index)} // Enter editing mode on double-click
                     />
                   )}
                 </Group>
+
               );
+            }
+            if (shape.type === "image") {
+              return <UploadedImage key={index} src={shape.src} x={shape.x} y={shape.y} />;
             }
             return null;
           })}
-          <section className="z-0">{drawGrid()}</section>
         </Layer>
       </Stage>
 
@@ -294,7 +322,9 @@ const InfiniteCanvas = () => {
           handleAddStickyNote={handleAddStickyNote}
           handleAddText={handleAddText}
           handleActivateDrawing={handleActivateDrawing}
+          handleToggleArrowMode={handleToggleArrowMode} 
           isDrawingActive={isDrawingActive}
+          isArrowMode={isArrowMode}
         />
       </div>
     </div>

@@ -5,6 +5,13 @@ import { PlusIcon } from '@heroicons/react/24/solid';
 import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
 import AddEvent from './AddEvent';
 import { Fragment, useState } from 'react';
+import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
+import OptionTray from './OptionTray';
+
+const options = [
+  { name: "Edit Event", onclick: "" },
+  { name: "Delete Event", onclick: "" }
+]
 
 const getDaysDifference = (start: string, end: string) => {
   const startDate = dayjs(start);
@@ -39,7 +46,7 @@ const CustomGanttTimeline: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen relative">
+    <div className="flex flex-col w-full h-full min-h-screen relative">
       <div className="relative overflow-x-auto w-full">
         {/* Subtle Background Grid */}
         <div className="w-full absolute inset-0 grid grid-cols-[repeat(31,_minmax(100px,_1fr))] pointer-events-none z-0">
@@ -117,6 +124,24 @@ const CustomGanttTimeline: React.FC = () => {
                       <p className="text-sm font-medium text-gray-700 dark:text-white">{event.tag}</p>
                       <p className="text-gray-700 dark:text-white font-bold text-base">{event.description}</p>
                     </div>
+                    <Popover className="relative">
+                      <PopoverButton className="w-fit">
+                        <EllipsisVerticalIcon className="text-gray-700 dark:text-white w-4 h-4" />
+                      </PopoverButton>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="opacity-0 translate-y-1"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in duration-150"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 translate-y-1"
+                      >
+                        <PopoverPanel className="absolute top-6 left-0n z-50">
+                          <OptionTray options={options} />
+                        </PopoverPanel>
+                      </Transition>
+                    </Popover>
                   </div>
                 </div>
               </div>
