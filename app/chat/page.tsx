@@ -1,5 +1,5 @@
 import { data } from "@/utils/data";
-import RightPanel from "../components/RightPanel";
+import LeftPanel from "../components/LeftPanel";
 import MenuBar from "../components/MenuBar";
 import ChatBody from "./components/ChatBody";
 import TitleBar from "../components/TitleBar";
@@ -12,9 +12,9 @@ const ChatHome = () => {
         <MenuBar />
       </section>
       <section className="tab-panel w-full flex items-start">
-        {/* RightPanel Menu */}
+        {/* LeftPanel Menu */}
         <section className="w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900">
-          <RightPanel />
+          <LeftPanel />
         </section>
         {/* TabPanels: Houses the content for each Tab */}
         <section className="w-[80%] flex justify-center items-center">

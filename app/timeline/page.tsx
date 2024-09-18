@@ -1,6 +1,6 @@
 "use client";
 import TitleBar from "../components/TitleBar"
-import RightPanel from "../components/RightPanel";
+import LeftPanel from "../components/LeftPanel";
 import MenuBar from "../components/MenuBar";
 import CustomGanttTimeline from "./components/CalendarTimeline"
 
@@ -12,7 +12,7 @@ const TimeLineHome = () => {
       </section>
       <section className="w-full flex items-start">
         <section className="w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900">
-          <RightPanel /> 
+          <LeftPanel /> 
         </section>
         <section className="w-[80%]">
           <TitleBar title="My Timeline" />

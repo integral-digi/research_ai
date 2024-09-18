@@ -1,5 +1,5 @@
 "use client";
-import RightPanel from "./components/RightPanel";
+import LeftPanel from "./components/LeftPanel";
 import MenuBar from "./components/MenuBar";
 import Channel from "./components/Channel";
 
@@ -15,7 +15,7 @@ const Home = () => {
       <section className="w-full flex items-start lg:hidden">
         {/* Left Sidebar */}
         <section className="w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900">
-          <RightPanel />
+          <LeftPanel />
         </section>
 
         {/* Right Content Section where TabPanels are displayed */}

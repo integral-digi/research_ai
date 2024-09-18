@@ -4,7 +4,7 @@ import NavTree from "./NavTree";
 import { useModal } from "@/context/ModalProvider";
 import { data } from "@/utils/data";
 
-const RightPanel = () => {
+const LeftPanel = () => {
     const { toggleModal } = useModal();
 
     return (
@@ -32,4 +32,4 @@ const RightPanel = () => {
     );
 };
 
-export default RightPanel;
+export default LeftPanel;

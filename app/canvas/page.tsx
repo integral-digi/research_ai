@@ -1,6 +1,6 @@
 "use client";
 import { data } from "@/utils/data"
-import RightPanel from "../components/RightPanel"
+import LeftPanel from "../components/LeftPanel"
 import MenuBar from "../components/MenuBar"
 import TitleBar from "../components/TitleBar"
 import InfiniteCanvas from "./components/CanvasContainer"
@@ -13,7 +13,7 @@ const CanvasHome = () => {
       </section>
       <section className="w-full flex items-start">
         <section className="w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900">
-          <RightPanel /> 
+          <LeftPanel /> 
         </section>
         <section className="w-[80%]">
           <section className="w-full">

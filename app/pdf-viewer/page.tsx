@@ -1,5 +1,5 @@
 "use client";
-import RightPanel from "../components/RightPanel";
+import LeftPanel from "../components/LeftPanel";
 import MenuBar from "../components/MenuBar";
 import TitleBar from "../components/TitleBar";
 import PDFViewer from "../pdf-viewer/components/PDFViewer";
@@ -23,7 +23,7 @@ const PDFHome = () => {
       </section>
       <section className="w-full flex items-start">
         <section className="w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900">
-          <RightPanel /> 
+          <LeftPanel /> 
         </section>
         <section className="w-[80%]">
             {/* Use fileName extracted from the fileUrl as the title */}
