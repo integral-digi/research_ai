@@ -1,5 +1,5 @@
-"use client"
-import  { useRef, useState, useCallback, useEffect } from "react";
+"use client";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { Stage, Layer, Rect, Text, Group, Line, Image as KonvaImage } from "react-konva";
 import Panel from "./Panel";
 import useImage from "use-image";
@@ -15,7 +15,9 @@ const InfiniteCanvas = () => {
   const [redoStack, setRedoStack] = useState<any[]>([]);
   const [undoStack, setUndoStack] = useState<any[]>([]);
   const [isDrawingActive, setIsDrawingActive] = useState(false);
-  const [editingTextIndex, setEditingTextIndex] = useState<number | null>(null); // To track the currently edited sticky note
+  const [editingTextIndex, setEditingTextIndex] = useState<number | null>(null);
+  const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 }); // Default size
+
   const isDrawing = useRef(false);
   const stageRef = useRef<any>(null);
 
@@ -23,7 +25,6 @@ const InfiniteCanvas = () => {
     setShapes((prev) => [...prev, newShape]);
     setUndoStack((prev) => [...prev, { action: "add", shape: newShape }]);
   }, []);
-
 
   const handleAddText = useCallback(() => {
     addShape({ type: "text", text: "Text", x: 100, y: 100 });
@@ -140,57 +141,52 @@ const InfiniteCanvas = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      const stage = stageRef.current;
-      if (stage) {
-        stage.width(window.innerWidth);
-        stage.height(window.innerHeight);
-      }
+      setCanvasSize({ width: window.innerWidth, height: window.innerHeight });
     };
 
+    handleResize(); // Set initial size on mount
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-    // Function to draw grid lines
-    const drawGrid = () => {
-      const gridSize = 50;
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      const lines = [];
-  
-      // Horizontal lines
-      for (let i = 0; i < height / gridSize; i++) {
-        lines.push(
-          <Line
-            key={`h${i}`}
-            points={[0, i * gridSize, width, i * gridSize]}
-            stroke="#ddd"
-            strokeWidth={1}
-          />
-        );
-      }
-  
-      // Vertical lines
-      for (let i = 0; i < width / gridSize; i++) {
-        lines.push(
-          <Line
-            key={`v${i}`}
-            points={[i * gridSize, 0, i * gridSize, height]}
-            stroke="#ddd"
-            strokeWidth={1}
-          />
-        );
-      }
-  
-      return lines;
-    };
+  const drawGrid = () => {
+    const gridSize = 50;
+    const lines = [];
+    const { width, height } = canvasSize;
+
+    // Horizontal lines
+    for (let i = 0; i < height / gridSize; i++) {
+      lines.push(
+        <Line
+          key={`h${i}`}
+          points={[0, i * gridSize, width, i * gridSize]}
+          stroke="#ddd"
+          strokeWidth={1}
+        />
+      );
+    }
+
+    // Vertical lines
+    for (let i = 0; i < width / gridSize; i++) {
+      lines.push(
+        <Line
+          key={`v${i}`}
+          points={[i * gridSize, 0, i * gridSize, height]}
+          stroke="#ddd"
+          strokeWidth={1}
+        />
+      );
+    }
+
+    return lines;
+  };
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       <Stage
         ref={stageRef}
-        width={window.innerWidth}
-        height={window.innerHeight}
+        width={canvasSize.width}
+        height={canvasSize.height}
         className="w-max bg-slate-100/20 dark:neutral-800/80"
         draggable
         onMouseDown={handleMouseDown}
@@ -282,9 +278,7 @@ const InfiniteCanvas = () => {
             }
             return null;
           })}
-          <section className="z-0">
-            {drawGrid()}
-          </section>
+          <section className="z-0">{drawGrid()}</section>
         </Layer>
       </Stage>
 
