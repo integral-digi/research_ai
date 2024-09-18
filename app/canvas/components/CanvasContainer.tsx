@@ -1,4 +1,5 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
+"use client"
+import  { useRef, useState, useCallback, useEffect } from "react";
 import { Stage, Layer, Rect, Text, Group, Line, Image as KonvaImage } from "react-konva";
 import Panel from "./Panel";
 import useImage from "use-image";
