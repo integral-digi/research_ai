@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { data } from "@/utils/data";
 import { createContext, useContext, useState } from "react";
 
@@ -16,15 +16,18 @@ interface NavTreeContextType {
   addNewItem: (parentId: string, newItem: TreeNode) => void;
   removeItem: (id: string) => void;
   updateItemLabel: (id: string, newLabel: string) => void;
+  showNewFolderInput: boolean;
+  setShowNewFolderInput: (value: boolean) => void;
+  newFolderName: string;
+  setNewFolderName: (value: string) => void;
 }
 
-// Helper function to recursively map through data items
 const mapTreeData = (nodes: any[]): TreeNode[] => {
   return nodes.map((node) => ({
     id: node.id,
     label: node.label,
     fileType: node.fileType as FileType,
-    children: node.children ? mapTreeData(node.children) : [], 
+    children: node.children ? mapTreeData(node.children) : [],
   }));
 };
 
@@ -34,27 +37,34 @@ const NavTreeContext = createContext<NavTreeContextType | undefined>(undefined);
 
 export const NavTreeProvider = ({ children }: { children: React.ReactNode }) => {
   const [treeData, setTreeData] = useState<TreeNode[]>(menuData);
+  const [showNewFolderInput, setShowNewFolderInput] = useState(false);
+  const [newFolderName, setNewFolderName] = useState("");
 
   const addNewItem = (parentId: string, newItem: TreeNode) => {
+    console.log("Adding new item to parent:", parentId); // Debug log
     const addRecursively = (nodes: TreeNode[]): TreeNode[] => {
       return nodes.map((node) => {
         if (node.id === parentId) {
-          return {
-            ...node,
-            children: [...(node.children || []), newItem], 
-          };
+          console.log("Parent found, adding item:", newItem); // Debug log
+          return { ...node, children: [...(node.children || []), newItem] };
+        } else if (node.children) {
+          return { ...node, children: addRecursively(node.children) };
         }
-        return node.children ? { ...node, children: addRecursively(node.children) } : node;
+        return node;
       });
     };
 
-    setTreeData((prev) => addRecursively(prev));
+    setTreeData((prev) => {
+      const updatedTree = addRecursively(prev);
+      console.log("Updated tree data:", updatedTree); // Debug log
+      return updatedTree;
+    });
   };
 
   const removeItem = (id: string) => {
     const removeRecursively = (nodes: TreeNode[]): TreeNode[] => {
       return nodes
-        .filter((node) => node.id !== id) // Remove item if ID matches
+        .filter((node) => node.id !== id)
         .map((node) => {
           if (node.children) {
             return { ...node, children: removeRecursively(node.children) };
@@ -70,7 +80,7 @@ export const NavTreeProvider = ({ children }: { children: React.ReactNode }) => 
     const updateRecursively = (nodes: TreeNode[]): TreeNode[] => {
       return nodes.map((node) => {
         if (node.id === id) {
-          return { ...node, label: newLabel }; 
+          return { ...node, label: newLabel };
         }
         return node.children ? { ...node, children: updateRecursively(node.children) } : node;
       });
@@ -80,7 +90,18 @@ export const NavTreeProvider = ({ children }: { children: React.ReactNode }) => 
   };
 
   return (
-    <NavTreeContext.Provider value={{ treeData, addNewItem, removeItem, updateItemLabel }}>
+    <NavTreeContext.Provider
+      value={{
+        treeData,
+        addNewItem,
+        removeItem,
+        updateItemLabel,
+        showNewFolderInput,
+        setShowNewFolderInput,
+        newFolderName,
+        setNewFolderName,
+      }}
+    >
       {children}
     </NavTreeContext.Provider>
   );

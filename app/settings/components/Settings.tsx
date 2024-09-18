@@ -12,6 +12,7 @@ import {
 import { useModal } from '@/context/ModalProvider';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
+import EditProfile from './Profile';
 
 const SettingsModal = () => {
     const { isOpen, toggleModal } = useModal();
@@ -73,11 +74,9 @@ const SettingsModal = () => {
 
                                 {/* Tab Panels */}
                                 <TabPanels className="w-3/4 p-6">
-                                    <TabPanel>
+                                    <TabPanel className="space-y-12">
                                         <h3 className="text-lg font-medium text-gray-900">Edit Profile</h3>
-                                        <p className="mt-2 text-sm text-gray-600">
-                                            Profile information.
-                                        </p>
+                                        <EditProfile />
                                     </TabPanel>
                                     <TabPanel>
                                         <h3 className="text-lg font-medium text-gray-900">Notifications</h3>

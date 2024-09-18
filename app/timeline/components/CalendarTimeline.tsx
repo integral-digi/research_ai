@@ -4,9 +4,8 @@ import { data } from '@/utils/data';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
 import AddEvent from './AddEvent';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
-// Helper function to calculate the difference between dates
 const getDaysDifference = (start: string, end: string) => {
   const startDate = dayjs(start);
   const endDate = dayjs(end);
@@ -14,32 +13,50 @@ const getDaysDifference = (start: string, end: string) => {
 };
 
 const CustomGanttTimeline: React.FC = () => {
-  const timelineStart = '2023-09-01'; // Define the start of the timeline
-  const timelineLength = 14; // Number of days in the timeline
-  const currentDate = dayjs().format('YYYY-MM-DD'); // Get the current date in 'YYYY-MM-DD' format
+  const [events, setEvents] = useState(data.events); 
+  const timelineStart = '2023-09-01';
+  const timelineLength = 31;
+  const currentDate = dayjs().format('YYYY-MM-DD');
+  const currentDatePosition = getDaysDifference(timelineStart, currentDate) + 1;
 
-  // Calculate the position of the current date relative to the timeline's start
-  const currentDatePosition = getDaysDifference(timelineStart, currentDate) + 1; 
+  const handleAddEvent = (newEvent: {
+    title: string;
+    startDate: string;
+    description: string;
+    tags: string[];
+  }) => {
+    setEvents((prevEvents: any) => [
+      ...prevEvents,
+      {
+        id: Date.now().toString(),
+        tag: newEvent.tags.join(', '),
+        description: newEvent.description,
+        start: newEvent.startDate,
+        end: newEvent.startDate,
+        color: '#32CD32', 
+      },
+    ]);
+  };
 
   return (
     <div className="flex flex-col w-full min-h-screen relative">
       <div className="relative overflow-x-auto w-full">
         {/* Subtle Background Grid */}
-        <div className="w-max absolute inset-0 grid grid-cols-[repeat(14,_minmax(100px,_1fr))] pointer-events-none z-0">
+        <div className="w-full absolute inset-0 grid grid-cols-[repeat(31,_minmax(100px,_1fr))] pointer-events-none z-0">
           {Array.from({ length: timelineLength }).map((_, index) => (
             <div
               key={index}
               className={`h-full ${
                 index % 2 === 0
-                  ? 'bg-slate-50 dark:bg-neutral-900/10' // Light background for even columns
-                  : 'bg-transparent' // No background for odd columns
+                  ? 'bg-slate-50 dark:bg-neutral-900/10'
+                  : 'bg-transparent'
               }`}
             ></div>
           ))}
         </div>
 
         {/* Date Headers */}
-        <div className="relative grid grid-cols-[repeat(14,_minmax(100px,_1fr))] gap-4 w-max border-b border-slate-300 dark:border-gray-700 bg-white dark:bg-neutral-800 py-4 z-10">
+        <div className="relative grid grid-cols-[repeat(31,_minmax(100px,_1fr))] gap-4 w-max border-b border-slate-300 dark:border-gray-700 bg-white dark:bg-neutral-800 py-4 z-10">
           {Array.from({ length: timelineLength }).map((_, index) => {
             const date = dayjs(timelineStart).add(index, 'day').format('ddd D');
             const isCurrentDate = index === currentDatePosition - 1;
@@ -64,23 +81,22 @@ const CustomGanttTimeline: React.FC = () => {
                 </div>
               </div>
             );
-          })}     
+          })}
         </div>
 
         {/* Vertical Line for Current Date */}
         {currentDatePosition > 0 && currentDatePosition <= timelineLength && (
           <div
-            className="absolute top-0 min-h-screen h-full w-0.5 bg-indigo-500 z-50" 
+            className="absolute top-0 min-h-screen h-full w-0.5 bg-indigo-500 z-50"
             style={{
-              left: `${((currentDatePosition - 1) * 100) / timelineLength}%`, 
+              left: `${((currentDatePosition - 1) * 100) / timelineLength}%`,
             }}
           ></div>
         )}
 
-
         {/* Event Bars */}
-        <div className="relative grid grid-cols-[repeat(14,_minmax(100px,_1fr))] gap-4 mt-4 z-10">
-          {data.events.map((event) => {
+        <div className="relative grid grid-cols-[repeat(31,_minmax(100px,_1fr))] gap-4 mt-4 z-10">
+          {events.map((event) => {
             const daysFromStart = getDaysDifference(timelineStart, event.start) + 1;
             const eventDuration = getDaysDifference(event.start, event.end) + 1;
 
@@ -96,9 +112,7 @@ const CustomGanttTimeline: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <div className="w-2 h-full bg-green-500 rounded-full"></div>
                   <div className="bg-white dark:bg-neutral-800 p-4 pr-8 shadow-lg rounded-lg flex space-x-8">
-                    {/* Colored line for progress */}
                     <div className="flex-shrink-0 w-1" style={{ backgroundColor: event.color }}></div>
-                    {/* event details */}
                     <div className="w-fit">
                       <p className="text-sm font-medium text-gray-700 dark:text-white">{event.tag}</p>
                       <p className="text-gray-700 dark:text-white font-bold text-base">{event.description}</p>
@@ -117,18 +131,18 @@ const CustomGanttTimeline: React.FC = () => {
           <PlusIcon className="w-5 h-5 text-gray-700 dark:text-white" />
         </PopoverButton>
         <Transition
-            as={Fragment}
-            enter="transition ease-out duration-200"
-            enterFrom="opacity-0 translate-y-1"
-            enterTo="opacity-100 translate-y-0"
-            leave="transition ease-in duration-150"
-            leaveFrom="opacity-100 translate-y-0"
-            leaveTo="opacity-0 translate-y-1"
-          >
-            <PopoverPanel className="fixed right-0 top-0 overflow-auto w-[30%] h-full min-h-screen z-50 bg-white dark:bg-neutral-800 shadow-3xl p-8">
-              <AddEvent />
-            </PopoverPanel>
-          </Transition>
+          as={Fragment}
+          enter="transition ease-out duration-200"
+          enterFrom="opacity-0 translate-y-1"
+          enterTo="opacity-100 translate-y-0"
+          leave="transition ease-in duration-150"
+          leaveFrom="opacity-100 translate-y-0"
+          leaveTo="opacity-0 translate-y-1"
+        >
+          <PopoverPanel className="fixed right-0 top-0 overflow-auto w-[30%] h-full min-h-screen z-50 bg-white dark:bg-neutral-800 shadow-3xl p-8">
+            <AddEvent onSave={handleAddEvent} />
+          </PopoverPanel>
+        </Transition>
       </Popover>
     </div>
   );

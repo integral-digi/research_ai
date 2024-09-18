@@ -16,7 +16,7 @@ const RightPanel = () => {
                     <section className="flex items-center space-x-4">
                         <ChevronUpDownIcon className="text-gray-700 dark:text-white w-4 h-4" />
                         <p className="text-gray-700 dark:text-white text-base font-medium">
-                            {data.user.username}
+                            {data.user.vault[0].name}
                         </p>
                     </section>
                     <section className="space-x-2 flex items-center">

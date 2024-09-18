@@ -4,7 +4,7 @@ import {
   ArrowTurnDownRightIcon,
   ArrowUturnRightIcon,
   ArrowUturnLeftIcon,
-  PaintBrushIcon,
+  PencilIcon,
   DocumentTextIcon,
   MinusIcon,
   PhotoIcon,
@@ -54,7 +54,7 @@ const Panel = ({
             aria-label="Add sticky note"
             onClick={handleAddStickyNote}
           />
-          <PaintBrushIcon
+          <PencilIcon
             className={`text-gray-700 dark:text-white w-4 h-4 cursor-pointer hover:text-blue-500 ${
               isDrawingActive ? "text-green-500 cursor-pen" : ""
             }`}

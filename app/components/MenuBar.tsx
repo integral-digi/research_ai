@@ -3,7 +3,6 @@ import {
   ArrowLeftIcon,
   Bars3Icon,
   ChatBubbleOvalLeftIcon,
-  FolderIcon,
   HeartIcon,
   MagnifyingGlassIcon,
   PlusIcon,
@@ -18,6 +17,7 @@ import { Popover, PopoverButton, PopoverPanel, Transition } from "@headlessui/re
 import { Tooltip } from "@mui/material";
 import { data } from "@/utils/data";
 import SearchField from "./SearchField";
+import AddFolder from "./AddFolder";
 
 const MenuBar: React.FC = () => {
   const { tabs, activeTabId, addNewTab, closeTab, setActiveTabId } = useTabs();
@@ -50,7 +50,7 @@ const MenuBar: React.FC = () => {
         <section className="flex items-center space-x-4">
           <MagnifyingGlassIcon className="w-4 h-4 cursor-pointer" onClick={handleSearchToggle} />
           <HeartIcon className="w-4 h-4 cursor-pointer" />
-          <FolderIcon className="w-4 h-4 cursor-pointer" />
+          <AddFolder />
           <Bars3Icon
             className="w-4 h-4 cursor-pointer"
             onClick={() => setIsPopoverOpen(!isPopoverOpen)}
@@ -70,7 +70,7 @@ const MenuBar: React.FC = () => {
       </section>
 
       {/* Tabs Section */}
-      <div className="-mb-5 flex items-center overflow-x-auto space-x-4 p-1 w-full max-w-3xl scrollbar-hide">
+      <div className="-mb-5 flex items-center overflow-x-auto space-x-4 p-1 w-1/2 scrollbar-hide">
         {tabs.map((tab) => (
           <div
             key={tab.id}

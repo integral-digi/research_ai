@@ -9,7 +9,11 @@ import { CalendarIcon, DocumentCheckIcon, DocumentTextIcon, PresentationChartLin
 export const data = {
   user: {
     username: "JohnDoe",
-    avatar: "assets/user.jpg"
+    avatar: "assets/user.jpg",
+    vault: [
+      {name: "Demo"},
+      {name: "website copy"}
+    ]
   },
   items: [
     {
@@ -35,7 +39,7 @@ export const data = {
     { id: '4', label: 'Trash', fileType: 'trash' },
   ],
   features: [
-    { id: 1, title: "Create a New Markdown", content: "", image: DocumentTextIcon   },
+    { id: 1, title: "Create a New Note", content: "", image: DocumentTextIcon   },
     { id: 2, title: "Create a New Canvas", content: CanvasTabView, image: PresentationChartLineIcon  },
     { id: 3, title: "Create a New Timeline", content: TimelineTabView, image: CalendarIcon  },
     // { id: 4, title: "View PDF", content:PDFTabView , image: DocumentCheckIcon  },

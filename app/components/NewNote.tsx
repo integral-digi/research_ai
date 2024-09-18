@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
 
-const NewMarkDown = () => {
+const NewNote = () => {
     // State for title and content
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -52,4 +52,4 @@ const NewMarkDown = () => {
     );
 };
 
-export default NewMarkDown;
+export default NewNote;

@@ -1,15 +1,23 @@
-"use client"
+"use client";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
-const AddEvent = () => {
+interface AddEventProps {
+  onSave: (newEvent: {
+    title: string;
+    startDate: string;
+    description: string;
+    tags: string[];
+  }) => void; // Prop to handle event saving
+}
+
+const AddEvent: React.FC<AddEventProps> = ({ onSave }) => {
   const [title, setTitle] = useState<string>("");
   const [eventDate, setDate] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState<string>("");
 
-  // Function to add a tag
   const addTag = (e: React.FormEvent) => {
     e.preventDefault();
     if (tagInput && !selectedTags.includes(tagInput)) {
@@ -18,17 +26,26 @@ const AddEvent = () => {
     }
   };
 
-  // Function to remove a tag
   const removeTag = (tag: string) => {
     setSelectedTags((prevTags) => prevTags.filter((t) => t !== tag));
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave({ title, startDate: eventDate, description, tags: selectedTags });
+    // Clear form after submission
+    setTitle("");
+    setDate("");
+    setDescription("");
+    setSelectedTags([]);
+  };
+
   return (
     <div className="w-full space-y-8">
-        <h3 className="font-bold text-xl text-gray-700 dark:text-white text-left">
-            Add New Event
-        </h3>
-      <form className="w-full space-y-12" onSubmit={addTag}>
+      <h3 className="font-bold text-xl text-gray-700 dark:text-white text-left">
+        Add New Event
+      </h3>
+      <form className="w-full space-y-12" onSubmit={handleSubmit}>
         {/* Title Section */}
         <section className="space-y-2 flex flex-col justify-start">
           <label
@@ -103,7 +120,7 @@ const AddEvent = () => {
             />
             <button
               type="submit"
-              className="px-4 h-12 dark:text-gray-700  dark:bg-white bg-zinc-900 text-white rounded-lg hover:bg-neutral-800 font-medium"
+              className="px-4 h-12 dark:text-gray-700 dark:bg-white bg-zinc-900 text-white rounded-lg hover:bg-neutral-800 font-medium"
               onClick={addTag}
             >
               Add Tag
@@ -140,4 +157,3 @@ const AddEvent = () => {
 };
 
 export default AddEvent;
-

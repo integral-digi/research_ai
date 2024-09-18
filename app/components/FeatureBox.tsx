@@ -3,7 +3,7 @@ import { ArrowRightIcon, SquaresPlusIcon, XMarkIcon } from "@heroicons/react/24/
 import { useState, Fragment, createElement } from "react";
 import { Dialog, DialogTitle, DialogPanel, Transition, TransitionChild } from "@headlessui/react";
 import { data } from "@/utils/data";
-import NewMarkDown from "./NewMarkDown";
+import NewMarkDown from "./NewNote";
 import { useTabs } from "@/context/TabContext"; 
 
 const featureInfo = {
@@ -31,7 +31,7 @@ const FeatureCard = () => {
 
   return (
     <div className="w-full">
-      <section className="max-w-3xl py-24 mx-auto space-y-12 md:p-12">
+      <section className="max-w-3xl py-12 mx-auto space-y-12 md:p-12">
         <section className="space-y-6 text-center">
           <h2 className="text-3xl font-black text-gray-700 dark:text-white">
             {featureInfo.title}
