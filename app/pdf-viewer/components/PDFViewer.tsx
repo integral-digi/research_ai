@@ -28,7 +28,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null); // Canvas for rendering
 
   // Debounce helper to limit the frequency of zoom and page changes
-  const debounce = (func: Function, delay: number) => {
+  const debounce = (func: any, delay: number) => {
     let timeoutId: ReturnType<typeof setTimeout>;
     return (...args: any[]) => {
       if (timeoutId) clearTimeout(timeoutId);
