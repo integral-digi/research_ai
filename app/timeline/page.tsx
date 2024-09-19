@@ -17,7 +17,7 @@ const TimeLineHome = () => {
       <section className={`w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900 ${!isLeftPanelVisible ? 'hidden' : ''} lg:hidden`}>
           <LeftPanel isVisible={isLeftPanelVisible} /> 
         </section>
-        <section className="w-[80%]">
+        <section className="w-[80%] lg:w-full">
           <TitleBar title="My Timeline" />
           <CustomGanttTimeline />
         </section>

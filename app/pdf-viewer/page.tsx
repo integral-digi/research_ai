@@ -33,7 +33,7 @@ const PDFHome = () => {
         <section className={`w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900 ${!isLeftPanelVisible ? 'hidden' : ''} lg:hidden`}>
           <LeftPanel isVisible={isLeftPanelVisible} /> 
         </section>
-        <section className="w-[80%]">
+        <section className="w-[80%] lg:w-full">
             {/* Use fileName extracted from the fileUrl as the title */}
             <TitleBar title={fileName} />
             <PDFViewer fileUrl={fileUrl} />

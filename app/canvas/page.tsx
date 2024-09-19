@@ -18,7 +18,7 @@ const CanvasHome = () => {
       <section className={`w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900 ${!isLeftPanelVisible ? 'hidden' : ''} lg:hidden`}>
           <LeftPanel isVisible={isLeftPanelVisible} /> 
         </section>
-        <section className="w-[80%]">
+        <section className="w-[80%] lg:w-full">
           <section className="w-full">
             <TitleBar title={data.chatData.title} />
             <InfiniteCanvas />

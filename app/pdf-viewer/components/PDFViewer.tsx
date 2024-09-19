@@ -140,7 +140,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
       )}
 
       {/* Toolbar */}
-      <div className="shadow-3xl py-4 px-8 rounded-lg bg-slate-100 dark:bg-zinc-900 w-fit flex items-center space-x-8 fixed bottom-16 translate-x-full">
+      <div className="shadow-3xl py-4 px-8 rounded-lg bg-slate-100 dark:bg-zinc-900 w-fit flex items-center space-x-8 fixed bottom-16 translate-x-full lg:translate-x-0">
         {/* Page Controls */}
         <div className="flex items-center space-x-4">
           <button onClick={() => handlePageChange(-1)} disabled={pageNumber <= 1}>
