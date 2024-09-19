@@ -1,4 +1,5 @@
 "use client";
+import { PopoverButton } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
@@ -42,9 +43,14 @@ const AddEvent: React.FC<AddEventProps> = ({ onSave }) => {
 
   return (
     <div className="w-full space-y-8">
+      <section className="flex items-center justify-between">
       <h3 className="font-bold text-xl text-gray-700 dark:text-white text-left">
         Add New Event
       </h3>
+      <PopoverButton>
+        <XMarkIcon className="w-5 h-5 text-gray-700 dark:text-white" />
+      </PopoverButton>
+      </section>
       <form className="w-full space-y-12" onSubmit={handleSubmit}>
         {/* Title Section */}
         <section className="space-y-2 flex flex-col justify-start">

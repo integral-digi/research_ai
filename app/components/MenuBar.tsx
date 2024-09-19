@@ -19,10 +19,10 @@ import { data } from "@/utils/data";
 import SearchField from "./SearchField";
 import AddFolder from "./AddFolder";
 
-const MenuBar: React.FC = () => {
+const MenuBar: React.FC<{ setIsLeftPanelVisible: React.Dispatch<React.SetStateAction<boolean>>, isLeftPanelVisible: boolean }> = ({ setIsLeftPanelVisible, isLeftPanelVisible }) => {
   const { tabs, activeTabId, addNewTab, closeTab, setActiveTabId } = useTabs();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const [showSearch, setShowSearch] = useState(false); 
+  const [showSearch, setShowSearch] = useState(false);
   const router = useRouter();
 
   const handleSearchToggle = () => {
@@ -40,20 +40,26 @@ const MenuBar: React.FC = () => {
   return (
     <section className="relative w-full h-24 bg-slate-100 dark:bg-zinc-900 flex items-center justify-between px-8 py-2">
       {/* Left Menu Section */}
-      <section className="flex space-x-6 items-center text-gray-700 dark:text-white">
+      <section className="flex gap-x-6 items-center text-gray-700 dark:text-white">
         <img
           src="/assets/research-logo.svg"
           alt="logo"
-          className="w-auto h-6 cursor-pointer"
+          className="w-auto h-6 cursor-pointer md:hidden"
           onClick={() => router.push("/")}
         />
-        <section className="flex items-center space-x-4">
+        <img
+          src="/assets/research-icon.svg"
+          alt="logo"
+          className="w-auto h-6 cursor-pointer hidden md:block"
+          onClick={() => router.push("/")}
+        />
+        <section className="flex items-center space-x-4 lg:hidden">
           <MagnifyingGlassIcon className="w-4 h-4 cursor-pointer" onClick={handleSearchToggle} />
           <HeartIcon className="w-4 h-4 cursor-pointer" />
           <AddFolder />
           <Bars3Icon
             className="w-4 h-4 cursor-pointer"
-            onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+            onClick={() => setIsLeftPanelVisible((prev) => !prev)} // Toggle LeftPanel visibility
           />
           {showSearch && (
             <div className="h-full min-h-screen absolute top-24 left-0 bg-slate-100 dark:bg-zinc-900 p-4 w-72 z-50">
@@ -62,10 +68,10 @@ const MenuBar: React.FC = () => {
           )}
         </section>
         <button
-          className="bg-white dark:bg-neutral-800 h-12 w-12 rounded-full hover:bg-white/30 hover:dark:bg-neutral-800/30 flex items-center justify-center"
+          className="lg:hidden bg-white dark:bg-neutral-800 h-12 w-12 md:h-8 md:w-8 rounded-full hover:bg-white/30 hover:dark:bg-neutral-800/30 flex items-center justify-center"
           onClick={switchToPrevTab}
         >
-          <ArrowLeftIcon className="w-5 h-5 text-gray-700 dark:text-white" />
+          <ArrowLeftIcon className="w-5 h-5 md:h-3 md:w-3 text-gray-700 dark:text-white" />
         </button>
       </section>
 
@@ -103,19 +109,19 @@ const MenuBar: React.FC = () => {
 
       {/* Add New Tab Button */}
       <button
-        className="bg-white dark:bg-neutral-800 h-12 w-12 rounded-full hover:bg-white/30 hover:dark:bg-neutral-800/30 flex items-center justify-center"
+        className="md:h-8 md:w-8 bg-white dark:bg-neutral-800 h-12 w-12 rounded-full hover:bg-white/30 hover:dark:bg-neutral-800/30 flex items-center justify-center"
         onClick={() => addNewTab(`Tab ${tabs.length + 1}`, <FeatureCard />)}
       >
-        <PlusIcon className="w-5 h-5 text-gray-700 dark:text-white" />
+        <PlusIcon className="w-5 h-5 md:h-3 md:w-3 text-gray-700 dark:text-white" />
       </button>
 
       {/* Right Menu Section */}
       <section className="flex space-x-4">
         <ChatBubbleOvalLeftIcon
-          className="w-6 h-6 cursor-pointer text-gray-700 dark:text-white"
+          className="w-6 h-6 cursor-pointer text-gray-700 dark:text-white md:hidden"
           onClick={() => router.push("/chat")}
         />
-        <Popover className="relative h-fit xl:hidden">
+        <Popover className="relative h-fit">
           <PopoverButton className="w-fit">
             <section className="h-6 w-6 rounded-full">
               <img

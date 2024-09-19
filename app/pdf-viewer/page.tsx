@@ -3,6 +3,7 @@ import LeftPanel from "../components/LeftPanel";
 import MenuBar from "../components/MenuBar";
 import TitleBar from "../components/TitleBar";
 import PDFViewer from "../pdf-viewer/components/PDFViewer";
+import { useState } from "react";
 
 // Function to extract the file name from the fileUrl
 const extractFileName = (fileUrl: string): string => {
@@ -11,6 +12,8 @@ const extractFileName = (fileUrl: string): string => {
 };
 
 const PDFHome = () => {
+  const [isLeftPanelVisible, setIsLeftPanelVisible] = useState(true); // State to control LeftPanel visibility
+
   const fileUrl = "/assets/babycv.pdf"; 
 
   // Extract the file name from the fileUrl
@@ -18,12 +21,12 @@ const PDFHome = () => {
 
   return (
     <main className="w-full bg-white dark:bg-neutral-800">
-      <section className="top-0 w-full">
-        <MenuBar />
+      <section className="top-0 w-full h-24">
+        <MenuBar setIsLeftPanelVisible={setIsLeftPanelVisible} isLeftPanelVisible={isLeftPanelVisible} />
       </section>
       <section className="w-full flex items-start">
-        <section className="w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900">
-          <LeftPanel /> 
+        <section className={`w-[20%] min-h-screen bg-slate-100 dark:bg-zinc-900 ${!isLeftPanelVisible ? 'hidden' : ''} lg:hidden`}>
+          <LeftPanel isVisible={isLeftPanelVisible} /> 
         </section>
         <section className="w-[80%]">
             {/* Use fileName extracted from the fileUrl as the title */}

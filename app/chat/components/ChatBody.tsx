@@ -8,7 +8,7 @@ import Alert from '@mui/material/Alert';
 
 const ChatBody = ({ id }: { id: string }) => {
   return (
-    <div className="w-full h-full border-l border-gray-400 border-opacity-20 relative">
+    <div className="w-full h-full min-h-screen border-l border-gray-400 border-opacity-20 relative">
       <div className="w-full h-full pt-8 px-8 pb-4 space-y-8">
         {data?.chatData?.conversation?.map((chat) => (
           <ChatBubble key={chat.id} role={chat.role} message={chat.message} />
@@ -50,7 +50,7 @@ const ChatBubble = memo(
     return (
       <div className="w-full h-full">
         <div 
-          className={`w-[90%] lg:w-[60%] ${
+          className={`w-[90%] lg:w-[75%] ${
           isUser ? "ml-auto bg-white dark:bg-neutral-800" : "mr-auto bg-slate-100 dark:bg-zinc-900"
           } border border-slate-300 dark:border-gray-700 rounded-2xl p-4 shadow-sm clear-both`}
         >
@@ -60,7 +60,7 @@ const ChatBubble = memo(
         </div>
     
         {role === "chatbot" && (
-          <div className="px-4 w-[90%] lg:w-[60%]">
+          <div className="px-4 w-[90%] lg:w-[75%]">
             <div className="w-full flex items-baseline justify-between space-x-2">
               <section className="rounded-lg p-2">
                 <img

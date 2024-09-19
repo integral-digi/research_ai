@@ -31,7 +31,7 @@ const FeatureCard = () => {
 
   return (
     <div className="w-full">
-      <section className="max-w-3xl py-12 mx-auto space-y-12 md:p-12">
+      <section className="max-w-3xl py-12 mx-auto space-y-12 lg:p-8">
         <section className="space-y-6 text-center">
           <h2 className="text-3xl font-black text-gray-700 dark:text-white">
             {featureInfo.title}
@@ -40,7 +40,7 @@ const FeatureCard = () => {
             {featureInfo.subtitle}
           </p>
         </section>
-        <section className="space-y-8 px-24">
+        <section className="space-y-8 px-24 lg:px-0">
           {data.features.map((feature) => (
             <div
               key={feature.id}

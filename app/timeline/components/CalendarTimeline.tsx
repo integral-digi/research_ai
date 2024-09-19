@@ -164,7 +164,7 @@ const CustomGanttTimeline: React.FC = () => {
           leaveFrom="opacity-100 translate-y-0"
           leaveTo="opacity-0 translate-y-1"
         >
-          <PopoverPanel className="fixed right-0 top-0 overflow-auto w-[30%] h-full min-h-screen z-50 bg-white dark:bg-neutral-800 shadow-3xl p-8">
+          <PopoverPanel className="fixed right-0 top-0 overflow-auto w-[30%] lg:w-full h-full min-h-screen z-50 bg-white dark:bg-neutral-800 shadow-3xl p-8">
             <AddEvent onSave={handleAddEvent} />
           </PopoverPanel>
         </Transition>

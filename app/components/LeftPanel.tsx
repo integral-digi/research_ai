@@ -4,8 +4,10 @@ import NavTree from "./NavTree";
 import { useModal } from "@/context/ModalProvider";
 import { data } from "@/utils/data";
 
-const LeftPanel = () => {
+const LeftPanel = ({ isVisible }: { isVisible: boolean }) => {
     const { toggleModal } = useModal();
+
+    if (!isVisible) return null; 
 
     return (
         <div className="bg-slate-100 dark:bg-zinc-900 h-max min-h-screen bottom-0">

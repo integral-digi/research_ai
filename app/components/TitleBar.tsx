@@ -12,19 +12,19 @@ const TitleBar:React.FC<TitleProps> = ( {title} ) => {
     const handleClick = () => {
         console.log("I've been clicked")
     }
-    
+
     return (
         <div className="z-30 w-full h-[4.5rem] bg-white dark:bg-neutral-800 shadow-3xl flex items-center relative">
             <div className="w-full">
                 <div className="w-full flex items-center justify-between px-8">
                     <section className="space-x-16 flex items-center">
-                        <section className="flex items-center space-x-3">
-                            <ArrowLeftIcon className="text-gray-700 dark:text-white w-5 h-5" />
-                            <ArrowRightIcon className="text-gray-700 dark:text-white w-5 h-5" />
+                        <section className="flex items-center gap-x-3 w-fit">
+                            <ArrowLeftIcon className="text-gray-700 dark:text-white w-5 h-5 md:w-4 md:h-4" />
+                            <ArrowRightIcon className="text-gray-700 dark:text-white w-5 h-5 md:w-4 md:h-4" />
                         </section>
                         <section className="w-fit">
-                            <Popover>
-                                <PopoverButton className="text-lg font-medium text-gray-700 dark:text-white">
+                            <Popover className="w-fit">
+                                <PopoverButton className="text-left text-nowrap text-lg md:text-base font-medium text-gray-700 dark:text-white">
                                     {title}
                                 </PopoverButton>
                                 <Transition
@@ -44,8 +44,8 @@ const TitleBar:React.FC<TitleProps> = ( {title} ) => {
                         </section>
                     </section>
                     <section className="flex items-center space-x-4">
-                        <BookmarkIcon className="text-gray-700 dark:text-white w-4 h-4" onClick={handleClick} />
-                        <TrashIcon className="text-gray-700 dark:text-white w-4 h-4" onClick={handleClick} />
+                        <BookmarkIcon className="text-gray-700 dark:text-white w-4 h-4 md:hidden" onClick={handleClick} />
+                        <TrashIcon className="text-gray-700 dark:text-white w-4 h-4 md:hidden" onClick={handleClick} />
                         <EllipsisVerticalIcon className="text-gray-700 dark:text-white w-4 h-4" onClick={handleClick} />
                     </section>
                 </div>
