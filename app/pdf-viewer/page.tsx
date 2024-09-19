@@ -1,9 +1,14 @@
 "use client";
+import { useState } from "react";
 import LeftPanel from "../components/LeftPanel";
 import MenuBar from "../components/MenuBar";
 import TitleBar from "../components/TitleBar";
-import PDFViewer from "../pdf-viewer/components/PDFViewer";
-import { useState } from "react";
+import dynamic from "next/dynamic";
+
+// Dynamically import the PDFViewer with SSR disabled
+const PDFViewer = dynamic(() => import('./components/PDFViewer'), {
+  ssr: false,
+});
 
 // Function to extract the file name from the fileUrl
 const extractFileName = (fileUrl: string): string => {

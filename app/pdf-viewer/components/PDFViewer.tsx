@@ -9,9 +9,8 @@ import {
   ArrowsPointingInIcon,
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
-// @ts-expect-error dev types can't be inferred
-import * as pdfjsLib from 'pdfjs-dist/build/pdf';
-import "pdfjs-dist/build/pdf.worker.entry";
+import * as pdfjsLib from 'pdfjs-dist';
+import "pdfjs-dist/build/pdf.worker.min.mjs";
 
 interface PDFViewerProps {
   fileUrl: string;
@@ -28,6 +27,15 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null); // Canvas for rendering
 
+  // Debounce helper to limit the frequency of zoom and page changes
+  const debounce = (func: Function, delay: number) => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+    return (...args: any[]) => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func(...args), delay);
+    };
+  };
+
   // Load PDF document
   useEffect(() => {
     const loadPdf = async () => {
@@ -38,10 +46,10 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
         const doc = await loadingTask.promise;
         setPdfDoc(doc);
         setNumPages(doc.numPages);
-        setLoading(false);
       } catch (err) {
-        console.error("Failed to load PDF:", err);
-        setError("Failed to load document. Please check the file URL or try again later.");
+        console.error("Error loading PDF:", err);
+        setError("Failed to load document. Check the file URL or try again.");
+      } finally {
         setLoading(false);
       }
     };
@@ -52,45 +60,63 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
   // Render the current page
   useEffect(() => {
     if (!pdfDoc || !canvasRef.current) return;
-  
+
+    let isCancelled = false; // Cancel flag
+
     const renderPage = async () => {
       const page = await pdfDoc.getPage(pageNumber);
       const viewport = page.getViewport({ scale: zoom });
-  
       const canvas = canvasRef.current;
-      if (!canvas) return; 
-  
-      const context = canvas.getContext("2d");
-      if (!context) return; 
-  
-      // Resize canvas to fit the PDF page
+      const context = canvas?.getContext("2d");
+
+      if (!canvas || !context) return;
+
+      // Fit canvas to the size of the PDF page
       canvas.width = orientation === "portrait" ? viewport.width : viewport.height;
       canvas.height = orientation === "portrait" ? viewport.height : viewport.width;
-  
+
       const renderContext = {
         canvasContext: context,
         viewport: orientation === "portrait" ? viewport : viewport.clone({ rotation: 90 }),
       };
-  
-      page.render(renderContext);
-    };
-  
-    renderPage();
-  }, [pdfDoc, pageNumber, zoom, orientation]);  
 
+      const renderTask = page.render(renderContext);
+
+      // Cancel previous render if component is unmounted or state changes
+      renderTask.promise.then(() => {
+        if (isCancelled) {
+          renderTask.cancel();
+        }
+      });
+    };
+
+    renderPage();
+
+    // Cleanup function to set the cancel flag when component unmounts or before the next render
+    return () => {
+      isCancelled = true;
+    };
+  }, [pdfDoc, pageNumber, zoom, orientation]);
+
+  // Handle Zoom
   const handleZoomIn = () => setZoom((prevZoom) => prevZoom + 0.5);
   const handleZoomOut = () => setZoom((prevZoom) => Math.max(0.5, prevZoom - 0.5));
   const handleZoomToFit = () => setZoom(1.0);
-  const handlePageChange = (offset: number) => {
+
+  // Handle Page Change with debounce
+  const handlePageChange = debounce((offset: number) => {
     if (numPages) {
       setPageNumber((prevPage) => Math.max(1, Math.min(numPages, prevPage + offset)));
     }
-  };
+  }, 300); // Debounced by 300ms
+
+  // Handle Orientation Change
   const handleOrientationChange = () =>
     setOrientation((prev) => (prev === "portrait" ? "landscape" : "portrait"));
 
   return (
     <div className="w-full max-h-screen overflow-y-scroll relative">
+      {/* Loading and Error States */}
       {loading && !error && (
         <div className="flex justify-center items-center h-full">
           <LinearProgress />
@@ -101,8 +127,14 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
           <span className="text-red-600">{error}</span>
         </div>
       )}
+
+      {/* Render the PDF */}
       {!loading && !error && (
-        <div className={`relative ${orientation === "landscape" ? "w-screen h-auto" : "w-auto h-screen"}`}>
+        <div
+          className={`relative ${
+            orientation === "landscape" ? "w-screen h-auto" : "w-auto h-screen"
+          }`}
+        >
           <canvas ref={canvasRef} className="mx-auto" />
         </div>
       )}
@@ -117,7 +149,10 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
           <span className="text-gray-700 dark:text-white text-sm font-medium">
             Page {pageNumber} of {numPages}
           </span>
-          <button onClick={() => handlePageChange(1)} disabled={pageNumber >= (numPages || 1)}>
+          <button
+            onClick={() => handlePageChange(1)}
+            disabled={pageNumber >= (numPages || 1)}
+          >
             <ChevronDownIcon className="w-6 h-6 text-gray-700 dark:text-white" />
           </button>
         </div>
