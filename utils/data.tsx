@@ -42,7 +42,7 @@ export const data = {
     { id: 1, title: "Create a New Note", content: "", image: DocumentTextIcon   },
     { id: 2, title: "Create a New Canvas", content: CanvasTabView, image: PresentationChartLineIcon  },
     { id: 3, title: "Create a New Timeline", content: TimelineTabView, image: CalendarIcon  },
-    // { id: 4, title: "View PDF", content:PDFTabView , image: DocumentCheckIcon  },
+    { id: 4, title: "View PDF", content:PDFTabView , image: DocumentCheckIcon  },
     { id: 5, title: "Chat with Research AI", content: ChatTabView, image: LogoIcon  }
   ],
   chatData: {
