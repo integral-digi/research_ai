@@ -21,7 +21,7 @@ const CanvasTabView = () => {
                 <section className="w-full">
                     {isLoading ? (
                         // Show LinearLoader while loading
-                        <div className="flex justify-center items-center min-h-screen">
+                        <div className="flex justify-center items-center min-h-screen px-32">
                             <LinearLoader />
                         </div>
                     ) : (

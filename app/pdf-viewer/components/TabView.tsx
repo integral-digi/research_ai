@@ -40,7 +40,7 @@ const PDFTabView = () => {
       <section className="w-full flex items-start">
         <section className="w-full">
           {isLoading ? (
-            <div className="flex justify-center items-center min-h-screen">
+            <div className="flex justify-center items-center min-h-screen px-32">
               <LinearLoader />
             </div>
           ) : (

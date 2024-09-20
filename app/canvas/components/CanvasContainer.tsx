@@ -88,7 +88,7 @@ const InfiniteCanvas = () => {
       y: 150,
       width: 360,
       height: 360,
-      backgroundColor: "#ffeb3b",
+      backgroundColor: "#BDFADC",
     });
   }, [addShape]);
 
@@ -276,7 +276,7 @@ const InfiniteCanvas = () => {
                           width: "100%",
                           height: "100%",
                           fontSize: "18px",
-                          fontFamily: "CircularStd-Book",
+                          fontFamily: "Arial",
                           backgroundColor: "transparent",
                           resize: "none",
                           border: "none",

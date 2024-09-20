@@ -11,6 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import * as pdfjsLib from 'pdfjs-dist';
 import "pdfjs-dist/build/pdf.worker.min.mjs";
+import LinearLoader from "@/utils/Loader";
 
 interface PDFViewerProps {
   fileUrl: string;
@@ -118,8 +119,8 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
     <div className="w-full max-h-screen overflow-y-scroll relative">
       {/* Loading and Error States */}
       {loading && !error && (
-        <div className="flex justify-center items-center h-full">
-          <LinearProgress />
+        <div className="flex justify-center items-center h-full px-32">
+          <LinearLoader />
         </div>
       )}
       {error && (
