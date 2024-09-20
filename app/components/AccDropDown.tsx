@@ -15,7 +15,7 @@ const darkItem = {
 
 const AccDropdown = () => {
   return (
-    <div className="w-72 h-fit relative bg-white dark:bg-neutral-800  rounded-xl drop-shadow-lg">
+    <div className="w-72 h-fit relative bg-white dark:bg-neutral-800  rounded-xl drop-shadow-lg z-50">
       <div className="space-y-6 p-8">
         <div className="space-y-6">
             {menuItems.map((item) => (

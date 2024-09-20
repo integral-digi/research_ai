@@ -121,7 +121,7 @@ const MenuBar: React.FC<{ setIsLeftPanelVisible: React.Dispatch<React.SetStateAc
           className="w-6 h-6 cursor-pointer text-gray-700 dark:text-white md:hidden"
           onClick={() => router.push("/chat")}
         />
-        <Popover className="relative h-fit">
+        <Popover className="relative h-fit z-50">
           <PopoverButton className="w-fit">
             <section className="h-6 w-6 rounded-full">
               <img
