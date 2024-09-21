@@ -20,7 +20,7 @@ const CanvasHome = () => {
         </section>
         <section className="w-[80%] lg:w-full">
           <section className="w-full">
-            <TitleBar title={data.chatData.title} />
+            <TitleBar title="Untitled Canvas" />
             <InfiniteCanvas />
           </section>
         </section>
