@@ -31,7 +31,7 @@ const RightPanel = ({ onSelectChat, onNewChat }: RightPanelProps) => {
 		const newChatId = chatData.length + 1;
 		const newChat: Chat = {
 			id: newChatId,
-			title: `Chat ${newChatId}`,
+			title: `Untitled Chat`,
 			isTyping: false,
 			lastSeen: new Date().toLocaleString(),
 			conversation: [], 
