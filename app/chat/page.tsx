@@ -5,6 +5,7 @@ import MenuBar from "../components/MenuBar";
 import ChatBody from "./components/ChatBody";
 import TitleBar from "../components/TitleBar";
 import { useState } from "react";
+import ChatView from "./components/ChatView";
 
 const ChatHome = () => {
   const [isLeftPanelVisible, setIsLeftPanelVisible] = useState(true); // State to control LeftPanel visibility
@@ -24,8 +25,10 @@ const ChatHome = () => {
         <section className="w-[80%] flex justify-center items-center lg:w-full">
           <section className="w-full gap-y-16">
             {/* First Tab Panel: Displays ChatBody */}
-            <TitleBar title={data.chatData.title} />
-            <ChatBody id="" />
+            <TitleBar title="Chats" />
+            <ChatView onSelectChat={function (chatId: number): void {
+              throw new Error("Function not implemented.");
+            } } />
           </section>
         </section>
       </section>

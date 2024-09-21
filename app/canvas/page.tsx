@@ -1,5 +1,4 @@
 "use client"
-import { data } from "@/utils/data"
 import LeftPanel from "../components/LeftPanel"
 import MenuBar from "../components/MenuBar"
 import TitleBar from "../components/TitleBar"
