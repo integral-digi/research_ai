@@ -132,7 +132,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
       {/* Render the PDF */}
       {!loading && !error && (
         <div
-          className={`relative ${
+          className={`relative py-12 ${
             orientation === "landscape" ? "w-screen h-auto" : "w-auto h-screen"
           }`}
         >

@@ -36,7 +36,7 @@ const PDFTabView = () => {
   }, []);
 
   return (
-    <main className="w-full bg-white dark:bg-neutral-800">
+    <main className="w-full h-full bg-white dark:bg-neutral-800 min-h-screen">
       <section className="w-full flex items-start">
         <section className="w-full">
           {isLoading ? (

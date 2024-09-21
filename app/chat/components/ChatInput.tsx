@@ -33,7 +33,7 @@ const ChatInput = () => {
     };
 
     return (
-        <div className="message-input relative px-8">
+        <div className="chat-input relative px-8">
             <div className="absolute right-12 top-4 flex items-center space-x-3 z-50">
                 <section className="flex items-center space-x-3">
                     <PaperClipIcon 
