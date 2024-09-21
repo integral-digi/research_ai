@@ -28,9 +28,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <DarkModeProvider>
-      <TabProvider>
-        <ModalProvider>
+    <ModalProvider>
+      <DarkModeProvider>
+        <TabProvider>
           <NavTreeProvider>
             <html lang="en">
               <body
@@ -40,8 +40,8 @@ export default function RootLayout({
               </body>
             </html>
           </NavTreeProvider>
-        </ModalProvider>
-      </TabProvider>
-    </DarkModeProvider>
+        </TabProvider>
+      </DarkModeProvider>
+    </ModalProvider>
   );
 }

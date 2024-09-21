@@ -1,4 +1,5 @@
 "use client"
+import { data } from "@/utils/data";
 import { useState } from "react";
 
 const EditProfile = () => {
@@ -14,13 +15,20 @@ const EditProfile = () => {
     return (
         <div>
             <form className="w-full space-y-8 flex flex-col justify-start" onSubmit={handleSubmit}>
+                    <section className="w-24 h-24">
+                        <img 
+                            src={data.user.avatar} 
+                            alt={data.user.username} 
+                            className="w-full h-full object-cover rounded-full" 
+                        />
+                    </section>
                 {/* Username field */}
                 <section className="space-y-2 flex flex-col justify-start">
                     <label className="text-left text-gray-500 dark:text-white font-medium text-base" htmlFor="username">
                         Username
                     </label>
                     <input 
-                        className="w-full font-normal border border-slate-300 text-gray-700 dark:text-white bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
+                        className="w-full font-normal px-4 border border-slate-300 text-gray-700 dark:text-white bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
                         id="username"
                         placeholder="Enter a username"
                         value={username}
@@ -35,7 +43,7 @@ const EditProfile = () => {
                         Email Address
                     </label>
                     <input 
-                        className="w-full font-normal text-gray-700 dark:text-white border border-slate-300 bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
+                        className="w-full font-normal px-4 text-gray-700 dark:text-white border border-slate-300 bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
                         type="email"
                         id="email"
                         placeholder="Email Address"
@@ -46,7 +54,7 @@ const EditProfile = () => {
                 </section>
 
                 {/* Submit button */}
-                <button type="submit" className="w-fit px-2 font-bold bg-zinc-900 dark:bg-white dark:text-gray-700 text-white rounded-lg hover:bg-gray-800 transition">
+                <button type="submit" className="w-fit px-4 h-12 font-bold bg-zinc-900 dark:bg-white dark:text-gray-700 text-white rounded-lg hover:bg-gray-800 transition">
                     Save Changes 
                 </button>
             </form>
