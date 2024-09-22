@@ -3,8 +3,8 @@ import { data } from "@/utils/data";
 import { useState } from "react";
 
 const EditProfile = () => {
-    const [username, setUsername] = useState(""); 
-    const [email, setEmail] = useState(""); 
+    const [username, setUsername] = useState(data.user.username); 
+    const [email, setEmail] = useState(data.user.email); 
 
     // Handle form submission
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

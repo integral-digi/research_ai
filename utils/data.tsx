@@ -8,8 +8,9 @@ import { CalendarIcon, DocumentCheckIcon, DocumentTextIcon, PresentationChartLin
 
 export const data = {
   user: {
-    username: "JohnDoe",
-    avatar: "assets/user.jpg",
+    username: "johndoe",
+    avatar: "/assets/user.jpg",
+    email: "jd@example.com",
     vault: [
       {name: "Demo"},
       {name: "website copy"}

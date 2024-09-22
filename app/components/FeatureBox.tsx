@@ -6,6 +6,7 @@ import { data } from "@/utils/data";
 import NewMarkDown from "./NewNote";
 import { useTabs } from "@/context/TabContext";
 import { useView } from "@/context/ViewContext"; 
+import { motion } from "framer-motion";
 
 const featureInfo = {
 	title: "Welcome to Research AI",
@@ -29,16 +30,24 @@ const FeatureCard = () => {
 		<div className="w-full">
 			<section className="max-w-4xl p-12 mx-auto space-y-12 lg:p-8 flex flex-col justify-center">
 				<section className="space-y-6 text-center">
-					<h2 className="text-3xl font-black text-gray-700 dark:text-white">{featureInfo.title}</h2>
-					<p className="text-lg text-gray-700 dark:text-white font-medium">{featureInfo.subtitle}</p>
+					<h2 className="text-3xl font-black text-gray-700 dark:text-white">
+            {featureInfo.title}
+          </h2>
+					<p className="text-lg text-gray-700 dark:text-white font-medium">
+            {featureInfo.subtitle}
+          </p>
 				</section>
 				{isGrid ? (
 					<section className="gap-4 w-full flex flex-wrap">
 						{data.features.map((feature) => (
-							<div
+							<motion.div
 								key={feature.id}
 								className="flex flex-col justify-between w-60 h-60 p-6 rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-zinc-900 hover:shadow-xl cursor-pointer"
 								onClick={() => handleTabClick(feature.id, feature)}
+                whileHover={{
+                  scale: 1.02,
+                  transition: { duration: 0.3 }
+                }}
 							>
                 <section className="space-y-6">
                   <div className="p-4 bg-blue-100 dark:bg-neutral-800 rounded-md w-fit">
@@ -51,17 +60,21 @@ const FeatureCard = () => {
                   </p>
                 </section>
 								<ArrowRightIcon className="ml-auto w-4 h-4 text-gray-500" />
-							</div>
+							</motion.div>
 						))}
 					</section>
 				) : (
 					// Render list view here if needed
           <section className="space-y-8 px-24 lg:px-0">
             {data.features.map((feature) => (
-              <div
+              <motion.div
                 key={feature.id}
                 className={`w-full p-4 md:p-6 rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-zinc-900 flex items-center hover:shadow-xl cursor-pointer transition-shadow`}
                 onClick={() => handleTabClick(feature.id, feature)}
+                whileHover={{
+                  scale: 1.02,
+                  transition: { duration: 0.3 }
+                }}
               >
                 <div className="flex items-center space-x-4">
                   <div className="p-3 bg-blue-100 dark:bg-neutral-800 rounded-md">
@@ -74,7 +87,7 @@ const FeatureCard = () => {
                   </p>
                 </div>
                 <ArrowRightIcon className="ml-auto w-6 h-6 text-gray-500" />
-              </div>
+              </motion.div>
             ))}
           </section>
 				)}
