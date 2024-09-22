@@ -29,7 +29,7 @@ const Security = () => {
                         Old Password
                     </label>
                     <input 
-                        className="w-full font-normal px-4 border border-slate-300 text-gray-700 dark:text-white bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
+                        className="w-full font-normal px-4 border border-slate-300 dark:border-gray-700 text-gray-700 dark:text-white bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
                         type="password"
                         id="password"
                         placeholder="Enter a password"
@@ -45,7 +45,7 @@ const Security = () => {
                         New Password
                     </label>
                     <input 
-                        className="w-full font-normal px-4 text-gray-700 dark:text-white border border-slate-300 bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
+                        className="w-full font-normal px-4 text-gray-700 dark:text-white border border-slate-300 dark:border-gray-700 bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
                         type="password"
                         id="newpassword"
                         placeholder="New Password"
@@ -60,7 +60,7 @@ const Security = () => {
                         Confirm New Password
                     </label>
                     <input 
-                        className="w-full font-normal px-4 text-gray-700 dark:text-white border border-slate-300 bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
+                        className="w-full font-normal px-4 text-gray-700 dark:text-white border border-slate-300 dark:border-gray-700 bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
                         type="password"
                         id="confirmnpassword"
                         placeholder="Confirm Password"

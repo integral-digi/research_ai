@@ -28,7 +28,7 @@ const EditProfile = () => {
                         Username
                     </label>
                     <input 
-                        className="w-full font-normal px-4 border border-slate-300 text-gray-700 dark:text-white bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
+                        className="w-full font-normal px-4 border border-slate-300 dark:border-gray-700 text-gray-700 dark:text-white bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
                         id="username"
                         placeholder="Enter a username"
                         value={username}
@@ -43,7 +43,7 @@ const EditProfile = () => {
                         Email Address
                     </label>
                     <input 
-                        className="w-full font-normal px-4 text-gray-700 dark:text-white border border-slate-300 bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
+                        className="w-full font-normal px-4 text-gray-700 dark:text-white border border-slate-300 dark:border-gray-700 bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300" 
                         type="email"
                         id="email"
                         placeholder="Email Address"
