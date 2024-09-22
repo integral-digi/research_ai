@@ -4,6 +4,10 @@ import classNames from 'classnames';
 import EditProfile from './Profile';
 import { UserIcon, BoltIcon, ShieldExclamationIcon, ArchiveBoxIcon, CubeIcon, CreditCardIcon, AdjustmentsHorizontalIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { createElement } from 'react';
+import Security from './Security';
+import ChooseModel from '@/app/chat/components/ModelSelection';
+import DeleteAcct from './DeleteAcct';
+import Appearance from './Appearance';
 
 const tabItems = [
     { name: 'Edit Profile', icon: UserIcon },
@@ -27,7 +31,7 @@ const SettingsTab = () => {
                             key={idx}
                             className={({ selected }) =>
                                 classNames(
-                                    'flex items-center space-x-3 w-full py-2 px-4 text-left text-base font-medium text-gray-700 dark:text-white hover:bg-gray-100 focus:outline-none',
+                                    'flex items-center space-x-3 w-full py-2 px-4 text-left text-base font-medium text-gray-700 dark:text-white hover:bg-zinc-900/20  focus:outline-none',
                                     selected
                                         ? 'bg-slate-100 dark:bg-zinc-900 text-blue-600'
                                         : 'text-gray-700 dark:text-white'
@@ -46,50 +50,49 @@ const SettingsTab = () => {
                 {/* Tab Panels */}
                 <TabPanels className="w-2/3 pl-10">
                     <TabPanel className="space-y-12">
-                        <h3 className="text-2xl font-black text-zinc-900 dark:text-white">Edit Profile</h3>
+                        <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
+                            Edit Profile
+                        </h3>
                         <EditProfile />
                     </TabPanel>
-                    <TabPanel>
-                        <h3 className="text-lg font-medium text-gray-900">Notifications</h3>
-                        <p className="mt-2 text-sm text-gray-600">
-                            Notification settings.
-                        </p>
+                    <TabPanel className="space-y-12">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Notifications
+                        </h3>
                     </TabPanel>
-                    <TabPanel>
-                        <h3 className="text-lg font-medium text-gray-900">Notifications</h3>
-                        <p className="mt-2 text-sm text-gray-600">
-                            Notification settings.
-                        </p>
+                    <TabPanel className="space-y-12">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Security
+                        </h3>
+                        <Security />
                     </TabPanel>
-                    <TabPanel>
-                        <h3 className="text-lg font-medium text-gray-900">Notifications</h3>
-                        <p className="mt-2 text-sm text-gray-600">
-                            Notification settings.
-                        </p>
+                    <TabPanel className="space-y-12">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Vault
+                        </h3>
+                        <ChooseModel />
                     </TabPanel>
-                    <TabPanel>
-                        <h3 className="text-lg font-medium text-gray-900">Notifications</h3>
-                        <p className="mt-2 text-sm text-gray-600">
-                            Notification settings.
-                        </p>
+                    <TabPanel className="space-y-12">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Manage Plugins
+                        </h3>
                     </TabPanel>
-                    <TabPanel>
-                        <h3 className="text-lg font-medium text-gray-900">Notifications</h3>
-                        <p className="mt-2 text-sm text-gray-600">
+                    <TabPanel className="space-y-12">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
                             Subscription
-                        </p>
+                        </h3>
                     </TabPanel>
-                    <TabPanel>
-                        <h3 className="text-lg font-medium text-gray-900">Notifications</h3>
-                        <p className="mt-2 text-sm text-gray-600">
-                            Notification settings.
-                        </p>
+                    <TabPanel className="space-y-12">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Appearance
+                        </h3>
+                        <Appearance />
                     </TabPanel>
-                    <TabPanel>
-                        <h3 className="text-lg font-medium text-gray-900">Notifications</h3>
-                        <p className="mt-2 text-sm text-gray-600">
-                            Notification settings.
-                        </p>
+                    <TabPanel className="space-y-8">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Delete Account
+                        </h3>
+                        <DeleteAcct />
                     </TabPanel>
                 </TabPanels>
             </div>

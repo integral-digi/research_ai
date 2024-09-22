@@ -54,7 +54,7 @@ const EditProfile = () => {
                 </section>
 
                 {/* Submit button */}
-                <button type="submit" className="w-fit px-4 h-12 font-bold bg-zinc-900 dark:bg-white dark:text-gray-700 text-white rounded-lg hover:bg-gray-800 transition">
+                <button type="submit" className="w-fit px-4 h-10 font-bold bg-zinc-900 dark:bg-white dark:text-gray-700 text-white rounded-lg hover:bg-gray-800 transition">
                     Save Changes 
                 </button>
             </form>
