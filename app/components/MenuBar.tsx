@@ -3,7 +3,7 @@ import {
 	ArrowLeftIcon,
 	Bars3Icon,
 	ChatBubbleOvalLeftIcon,
-	HeartIcon,
+	DocumentPlusIcon,
 	MagnifyingGlassIcon,
 	PlusIcon,
 	XMarkIcon,
@@ -19,6 +19,7 @@ import { data } from "@/utils/data";
 import SearchField from "./SearchField";
 import AddFolder from "./AddFolder";
 import Logo from "@/public/assets/Logo";
+import AddDocument from "./AddMarkDown";
 
 const MenuBar: React.FC<{
 	setIsLeftPanelVisible: React.Dispatch<React.SetStateAction<boolean>>,
@@ -53,7 +54,7 @@ const MenuBar: React.FC<{
 			</section>
 			<section className="flex items-center space-x-4 lg:hidden">
 				<MagnifyingGlassIcon className="w-4 h-4  text-gray-700 dark:text-white cursor-pointer" onClick={handleSearchToggle} />
-				<HeartIcon className="w-4 h-4 text-gray-700 dark:text-white cursor-pointer" />
+				<AddDocument />
 				<AddFolder />
 				<Bars3Icon
 					className="w-4 h-4  text-gray-700 dark:text-white cursor-pointer"

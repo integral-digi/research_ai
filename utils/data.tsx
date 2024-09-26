@@ -20,8 +20,9 @@ export const data = {
     {
       id: '1',
       label: 'Documents',
+      fileType: 'folder',
       children: [
-        { id: '1.1', label: 'Company', children: [{ id: '1.1.1', label: 'Invoice', fileType: 'pdf' }, { id: '1.1.2', label: 'Meeting notes', fileType: 'doc' }] },
+        { id: '1.1', label: 'Company', fileType: 'folder', children: [{ id: '1.1.1', label: 'Invoice', fileType: 'pdf' }, { id: '1.1.2', label: 'Meeting notes', fileType: 'doc' }] },
         { id: '1.2', label: 'Personal', fileType: 'folder' },
         { id: '1.3', label: 'Group photo', fileType: 'image' },
       ],
@@ -35,9 +36,9 @@ export const data = {
         { id: '5.2', label: 'Image 1', fileType: 'image' }, 
       ],
     },
-    { id: '2', label: 'Bookmarked', fileType: 'pinned', children: [{ id: '2.1', label: 'Learning materials', fileType: 'folder' }] },
+    { id: '2', label: 'Bookmarked', fileType: 'folder', children: [{ id: '2.1', label: 'Learning materials', fileType: 'folder' }] },
     { id: '3', label: 'History', fileType: 'folder' },
-    { id: '4', label: 'Trash', fileType: 'trash' },
+    { id: '4', label: 'Trash', fileType: 'folder' },
   ],
   features: [
     { id: 1, title: "Create a New Note", content: "", image: DocumentTextIcon   },
