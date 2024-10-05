@@ -43,7 +43,7 @@ const FeatureCard = () => {
                         {data.features.map((feature) => (
                             <motion.div
                                 key={feature.id}
-                                className="flex flex-col justify-between w-60 h-60 p-6 rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-zinc-900/80 hover:shadow-xl cursor-pointer"
+                                className="flex flex-col justify-between w-60 h-60 md:w-full p-6 rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-zinc-900/80 hover:shadow-xl cursor-pointer"
                                 onClick={() => handleTabClick(feature.id, feature)}
                                 whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
                             >

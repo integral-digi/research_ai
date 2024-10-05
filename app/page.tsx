@@ -3,6 +3,7 @@ import { useState } from "react";
 import LeftPanel from "./components/LeftPanel";
 import MenuBar from "./components/MenuBar";
 import Channel from "./components/Channel";
+import MobileMenuBar from "./components/MobileMenu";
 
 const Home = () => {
   const [isLeftPanelVisible, setIsLeftPanelVisible] = useState(true); // State to control LeftPanel visibility
@@ -10,10 +11,12 @@ const Home = () => {
   return (
     <main className="w-full bg-white dark:bg-neutral-800">
       {/* Top Section containing the MenuBar */}
-      <section className="top-0 w-full h-24">
+      <section className="top-0 w-full h-24 lg:hidden">
         <MenuBar setIsLeftPanelVisible={setIsLeftPanelVisible} isLeftPanelVisible={isLeftPanelVisible} />
       </section>
-
+      <section className="top-0 w-full hidden lg:block">
+        <MobileMenuBar />
+      </section>
       {/* Main Content Section */}
       <section className="w-full flex items-start">
         {/* Left Sidebar */}
