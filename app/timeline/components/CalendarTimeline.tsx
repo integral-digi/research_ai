@@ -34,24 +34,31 @@ const CustomGanttTimeline: React.FC = () => {
 
   const handleAddEvent = (newEvent: {
     title: string;
-    startDate: string;
-    endDate?: string;
+    startDate: string | Date;
+    endDate?: string | Date;
     description: string;
     tags: string[];
   }) => {
-    const endDate = newEvent.endDate || newEvent.startDate; // Fallback to startDate if endDate is not provided
+    const formattedStartDate = typeof newEvent.startDate === 'string'
+      ? newEvent.startDate
+      : dayjs(newEvent.startDate).format('YYYY-MM-DD');
+    const formattedEndDate = typeof newEvent.endDate === 'string'
+      ? newEvent.endDate || formattedStartDate
+      : dayjs(newEvent.endDate).format('YYYY-MM-DD') || formattedStartDate;
+  
     setEvents((prevEvents: any) => [
       ...prevEvents,
       {
         id: Date.now().toString(),
         tag: newEvent.tags.join(', '),
         description: newEvent.description,
-        start: newEvent.startDate,
-        end: endDate,
+        start: formattedStartDate,
+        end: formattedEndDate,
         color: '#32CD32',
       },
     ]);
   };
+  
 
   const renderEvent = (event: any) => {
     const daysFromStart = Math.max(1, getDaysDifference(timelineStart, event.start) + 1);
