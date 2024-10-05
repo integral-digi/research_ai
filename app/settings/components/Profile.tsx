@@ -58,7 +58,7 @@ const EditProfile = () => {
                     />
                     <button 
                         type="button" 
-                        className="w-8 h-8 flex items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-800 absolute bottom-0 right-0"
+                        className="w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-neutral-800 absolute bottom-0 right-0"
                         onClick={handleAvatarUpload}
                         aria-label="Upload avatar"
                     >
