@@ -23,15 +23,15 @@ const tabItems = [
 const SettingsTab = () => {
     return (
         <TabGroup>
-            <div className="flex flex-col lg:flex-row items-start">
-                {/* Tab List (Vertical Navigation for larger screens, Horizontal for mobile) */}
-                <TabList className="space-y-2 w-full lg:w-auto md:flex md:items-center md:space-x-4 block overflow-x-auto lg:overflow-visible whitespace-nowrap border-b md:border-none">
+            <div className="flex md:flex-col items-start md:space-y-12 md:overflow-clip">
+                {/* Tab List (Vertical Navigation) */}
+                <TabList className="w-1/3 space-y-2 md:w-full md:flex overflow-x-auto md:space-x-2 whitespace-nowrap md:border-b border-none scrollbar-hide">
                     {tabItems.map((item, idx) => (
                         <Tab
                             key={idx}
                             className={({ selected }) =>
                                 classNames(
-                                    'flex items-center space-x-3 py-2 px-4 lg:px-0 text-left text-base font-medium text-gray-700 dark:text-white hover:bg-zinc-900/20 focus:outline-none lg:w-full',
+                                    'flex items-center space-x-3 w-full py-2 px-4 text-left text-base font-medium text-gray-700 dark:text-white hover:bg-zinc-900/20  focus:outline-none',
                                     selected
                                         ? 'bg-slate-100 dark:bg-zinc-900 text-blue-600'
                                         : 'text-gray-700 dark:text-white'
@@ -41,46 +41,63 @@ const SettingsTab = () => {
                             <section className="text-gray-700 dark:text-white w-4 h-4">
                                 {createElement(item.icon)}
                             </section>
-                            <p>{item.name}</p>
+                            <p>
+                                {item.name}
+                            </p> 
                         </Tab>
                     ))}
                 </TabList>
-
                 {/* Tab Panels */}
-                <TabPanels className="lg:w-2/3 w-full lg:pl-10">
+                <TabPanels className="w-2/3 pl-10 md:w-full md:pl-0">
                     <TabPanel className="space-y-12">
-                        <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">Edit Profile</h3>
+                        <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
+                            Edit Profile
+                        </h3>
                         <EditProfile />
                     </TabPanel>
                     <TabPanel className="space-y-12">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Notifications</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Notifications
+                        </h3>
                     </TabPanel>
                     <TabPanel className="space-y-12">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Security</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Security
+                        </h3>
                         <Security />
                     </TabPanel>
                     <TabPanel className="space-y-12">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Vault</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Vault
+                        </h3>
                         <ChooseModel />
                     </TabPanel>
                     <TabPanel className="space-y-12">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Manage Plugins</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Manage Plugins
+                        </h3>
                     </TabPanel>
                     <TabPanel className="space-y-12">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Subscription</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Subscription
+                        </h3>
                     </TabPanel>
                     <TabPanel className="space-y-12">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Appearance</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Appearance
+                        </h3>
                         <Appearance />
                     </TabPanel>
                     <TabPanel className="space-y-8">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Delete Account</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Delete Account
+                        </h3>
                         <DeleteAcct />
                     </TabPanel>
                 </TabPanels>
             </div>
         </TabGroup>
-    );
-};
+    )
+}
 
 export default SettingsTab;
