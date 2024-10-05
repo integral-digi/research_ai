@@ -26,9 +26,7 @@ const ChatHome = () => {
           <section className="w-full gap-y-16">
             {/* First Tab Panel: Displays ChatBody */}
             <TitleBar title="Chats" />
-            <ChatView onSelectChat={function (chatId: number): void {
-              throw new Error("Function not implemented.");
-            } } />
+            <ChatView />
           </section>
         </section>
       </section>

@@ -19,7 +19,7 @@ const DeleteModal = ({ open, close, isOpen }: any) => {
               </p>
               <div className="mt-4 flex space-x-6 items-center">
                 <button
-                  className="inline-flex items-center gap-2 rounded-md bg-white py-1.5 px-3 text-sm/6 font-bold text-gray-700 shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                  className="inline-flex items-center gap-2 rounded-md bg-zinc-900 dark:bg-white py-1.5 px-3 text-sm/6 font-bold text-white dark:text-gray-700 shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                   onClick={close}
                 >
                   Cancel

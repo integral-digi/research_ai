@@ -29,11 +29,19 @@ interface ChatBodyProps {
 
 const ChatBody = ({ chat }: ChatBodyProps) => {
   return (
-    <div className="w-full h-screen border-l border-gray-400 border-opacity-20 relative">
+    <div className="w-full h-full bottom-0 top-0 overflow-y-auto border-l border-gray-400 border-opacity-20 relative">
       <div className="w-full h-fit pt-8 px-8 pb-48 space-y-8">
-        {chat.conversation.map((chatMessage) => (
-          <ChatBubble key={chatMessage.id} role={chatMessage.role} message={chatMessage.message} id={0} messageType={""} time={""} isRead={false} />
-        ))}
+        {chat.conversation.length === 0 ? (
+          <div className="h-full w-full top-0 bottom-0 flex items-center justify-center py-48">
+            <p className="text-center text-gray-700 dark:text-white font-medium my-auto">
+              No messages yet. Start the conversation!
+            </p>
+          </div>
+        ) : (
+          chat.conversation.map((chatMessage) => (
+            <ChatBubble key={chatMessage.id} {...chatMessage} />
+          ))
+        )}
         {chat.isTyping && (
           <div className="w-fit shadow-sm rounded-2xl p-4">
             <img

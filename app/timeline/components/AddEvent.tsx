@@ -2,19 +2,23 @@
 import { PopoverButton } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface AddEventProps {
   onSave: (newEvent: {
     title: string;
-    startDate: string;
+    startDate: Date;
+    endDate: Date;
     description: string;
     tags: string[];
-  }) => void; // Prop to handle event saving
+  }) => void; 
 }
 
 const AddEvent: React.FC<AddEventProps> = ({ onSave }) => {
   const [title, setTitle] = useState<string>("");
-  const [eventDate, setDate] = useState<string>("");
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [description, setDescription] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState<string>("");
@@ -33,23 +37,32 @@ const AddEvent: React.FC<AddEventProps> = ({ onSave }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave({ title, startDate: eventDate, description, tags: selectedTags });
-    // Clear form after submission
-    setTitle("");
-    setDate("");
-    setDescription("");
-    setSelectedTags([]);
+    if (startDate && endDate) {
+      onSave({
+        title,
+        startDate,
+        endDate,
+        description,
+        tags: selectedTags,
+      });
+      // Clear form after submission
+      setTitle("");
+      setStartDate(undefined);
+      setEndDate(undefined);
+      setDescription("");
+      setSelectedTags([]);
+    }
   };
 
   return (
     <div className="w-full space-y-8">
       <section className="flex items-center justify-between">
-      <h3 className="font-bold text-xl text-gray-700 dark:text-white text-left">
-        Add New Event
-      </h3>
-      <PopoverButton>
-        <XMarkIcon className="w-5 h-5 text-gray-700 dark:text-white" />
-      </PopoverButton>
+        <h3 className="font-bold text-xl text-gray-700 dark:text-white text-left">
+          Add New Event
+        </h3>
+        <PopoverButton>
+          <XMarkIcon className="w-5 h-5 text-gray-700 dark:text-white" />
+        </PopoverButton>
       </section>
       <form className="w-full space-y-12" onSubmit={handleSubmit}>
         {/* Title Section */}
@@ -72,18 +85,34 @@ const AddEvent: React.FC<AddEventProps> = ({ onSave }) => {
 
         {/* Date Section */}
         <section className="space-y-2 flex flex-col justify-start">
-          <label
-            className="text-left text-gray-500 dark:text-white font-medium text-base"
-            htmlFor="date"
-          >
-            Date
+          <label className="text-left text-gray-500 dark:text-white font-medium text-base">
+            Start Date
           </label>
-          <input
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date || undefined)}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
             className="w-full font-normal border border-slate-300 text-gray-700 dark:text-white bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300"
-            id="date"
-            type="date"
-            value={eventDate}
-            onChange={(e) => setDate(e.target.value)}
+            placeholderText="Select start date"
+            required
+          />
+        </section>
+
+        <section className="space-y-2 flex flex-col justify-start">
+          <label className="text-left text-gray-500 dark:text-white font-medium text-base">
+            End Date
+          </label>
+          <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date || undefined)}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            className="w-full font-normal border border-slate-300 text-gray-700 dark:text-white bg-transparent rounded-lg p-2 focus:ring focus:ring-gray-300"
+            placeholderText="Select end date"
             required
           />
         </section>

@@ -47,24 +47,25 @@ const MenuBar: React.FC<{
 			{/* Left Menu Section */}
 			<section className="flex gap-x-6 items-center text-gray-700 dark:text-white">
 				<section
-					className="w-auto h-6 cursor-pointer hidden md:block"
+					className="w-auto h-6 cursor-pointer md:hidden"
 					onClick={() => router.push("/")}
-				/>
-				<Logo />
-			</section>
-			<section className="flex items-center space-x-4 lg:hidden">
-				<MagnifyingGlassIcon className="w-4 h-4  text-gray-700 dark:text-white cursor-pointer" onClick={handleSearchToggle} />
-				<AddDocument />
-				<AddFolder />
-				<Bars3Icon
-					className="w-4 h-4  text-gray-700 dark:text-white cursor-pointer"
-					onClick={() => setIsLeftPanelVisible((prev) => !prev)} // Toggle LeftPanel visibility
-				/>
-				{showSearch && (
-					<div className="h-full min-h-screen absolute top-24 left-0 bg-slate-100 dark:bg-zinc-900 p-4 w-72 z-50">
-						<SearchField />
-					</div>
-				)}
+				>
+					<Logo />
+				</section>
+				<section className="flex items-center space-x-4 lg:hidden">
+					<MagnifyingGlassIcon className="w-4 h-4  text-gray-700 dark:text-white cursor-pointer" onClick={handleSearchToggle} />
+					<AddDocument />
+					<AddFolder />
+					<Bars3Icon
+						className="w-4 h-4  text-gray-700 dark:text-white cursor-pointer"
+						onClick={() => setIsLeftPanelVisible((prev) => !prev)} // Toggle LeftPanel visibility
+					/>
+					{showSearch && (
+						<div className="h-full min-h-screen absolute top-24 left-0 bg-slate-100 dark:bg-zinc-900 p-4 w-72 z-50">
+							<SearchField />
+						</div>
+					)}
+				</section>
 			</section>
 			<button
 				className="lg:hidden bg-white dark:bg-neutral-800 h-12 w-12 md:h-8 md:w-8 rounded-full hover:bg-white/30 hover:dark:bg-neutral-800/30 flex items-center justify-center"

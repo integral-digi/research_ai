@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Fragment, useState } from "react";
 import TagBar from "./TagBar";
-import DeleteModal from "./DeleteModal"; // Import DeleteModal
+import DeleteModal from "./DeleteModal"; 
 
 interface TitleProps {
   title: string;
@@ -19,7 +19,7 @@ interface TitleProps {
 const TitleBar: React.FC<TitleProps> = ({ title }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(title);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // State for DeleteModal
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); 
 
   // Handle title editing
   const handleEditClick = () => {
@@ -40,11 +40,11 @@ const TitleBar: React.FC<TitleProps> = ({ title }) => {
   };
 
   const openDeleteModal = () => {
-    setIsDeleteModalOpen(true); // Open the DeleteModal
+    setIsDeleteModalOpen(true); 
   };
 
   const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false); // Close the DeleteModal
+    setIsDeleteModalOpen(false); 
   };
 
   return (

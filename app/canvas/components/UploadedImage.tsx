@@ -1,17 +1,7 @@
-import React from 'react';
-import { Image as KonvaImage } from 'react-konva';
-import useImage from 'use-image';
+import { Image } from "react-konva";
+import useImage from "use-image";
 
-interface UploadedImageProps {
-  src: string;
-  x: number;
-  y: number;
-}
-
-const UploadedImage: React.FC<UploadedImageProps> = ({ src, x, y }) => {
+export const UploadedImage = ({ src, x, y }: { src: string; x: number; y: number }) => {
   const [image] = useImage(src);
-
-  return <KonvaImage image={image} x={x} y={y} draggable />;
+  return <Image image={image} x={x} y={y} draggable />;
 };
-
-export default UploadedImage;

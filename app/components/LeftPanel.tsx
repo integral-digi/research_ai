@@ -19,7 +19,7 @@ const LeftPanel = ({ isVisible }: { isVisible: boolean }) => {
   const closeAboutModal = () => setIsAboutOpen(false);
 
   return (
-    <div className="bg-slate-100 dark:bg-zinc-900 h-max min-h-screen bottom-0">
+    <div className="bg-slate-100 dark:bg-zinc-900 h-full min-h-screen top-0 bottom-0">
       <NavTree />
       <section className="space-y-4">
         <hr className="w-full bg-slate-300 dark:border-gray-700" />
@@ -54,7 +54,7 @@ const LeftPanel = ({ isVisible }: { isVisible: boolean }) => {
         >
           <div className="fixed inset-0 bg-black bg-opacity-30" />
           <div className="fixed inset-0 flex items-center justify-center p-4">
-            <DialogPanel className="min-h-96 bg-white dark:bg-neutral-800 rounded-xl shadow-lg w-full max-w-3xl p-10 z-50">
+            <DialogPanel className="min-h-96 bg-white dark:bg-neutral-800 rounded-xl shadow-lg w-full max-w-xl p-10 z-50">
               <section className="flex justify-end">
                 <button
                   ref={closeButtonRef}
